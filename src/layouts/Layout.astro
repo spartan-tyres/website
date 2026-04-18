@@ -9,20 +9,53 @@ interface Props {
 
 const {
   title = "Spartan Tyres",
-  description = "Quality tyres, fast fitting, honest pricing.",
+  description = "Quality tyres, fast fitting, honest pricing. Your local tyre specialist in Staines-upon-Thames, Surrey.",
   path = Astro.url.pathname,
 } = Astro.props;
 
-const base = import.meta.env.BASE_URL; // e.g. "/website/"
+const base = import.meta.env.BASE_URL;
+const siteOrigin = "https://spartan-tyres.com";
+const canonicalURL = new URL(path, siteOrigin).href;
+const ogImage = `${siteOrigin}/img/logo.jpg`;
 
 const nav = [
   { href: base, label: "Home" },
   { href: `${base}services/`, label: "Services" },
+  { href: `${base}faq/`, label: "FAQ" },
   { href: `${base}about/`, label: "About" },
   { href: `${base}contact/`, label: "Contact" },
 ];
 
 const normalized = path.endsWith("/") ? path : `${path}/`;
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "AutoRepair",
+  "name": "Spartan Tyres",
+  "description": "Independent tyre fitting specialist serving Staines-upon-Thames, Surrey and surrounding areas. New tyres, puncture repairs, wheel balancing and TPMS.",
+  "url": siteOrigin,
+  "logo": ogImage,
+  "image": ogImage,
+  "telephone": "",
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "Staines-upon-Thames",
+    "addressRegion": "Surrey",
+    "addressCountry": "GB"
+  },
+  "areaServed": [
+    "Staines-upon-Thames",
+    "Surrey",
+    "Ashford",
+    "Egham",
+    "Shepperton",
+    "Sunbury-on-Thames",
+    "Weybridge"
+  ],
+  "openingHours": "Mo-Su 00:00-23:59",
+  "priceRange": "££",
+  "sameAs": ["https://www.tiktok.com/@beanz377"]
+};
 ---
 
 <!doctype html>
@@ -34,6 +67,22 @@ const normalized = path.endsWith("/") ? path : `${path}/`;
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="generator" content={Astro.generator} />
     <meta name="description" content={description} />
+    <link rel="canonical" href={canonicalURL} />
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:locale" content="en_GB" />
+    <meta property="og:site_name" content="Spartan Tyres" />
+    <!-- Twitter / X card -->
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+    <!-- JSON-LD structured data -->
+    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
     <title>{title}</title>
   </head>
   <body>

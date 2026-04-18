@@ -1,0 +1,51 @@
+---
+import Layout from "../layouts/Layout.astro";
+
+const base = import.meta.env.BASE_URL;
+---
+
+<Layout
+  title="Page Not Found | Spartan Tyres"
+  description="The page you're looking for doesn't exist. Head back to Spartan Tyres."
+>
+  <section class="notfound">
+    <div class="container notfound-inner">
+      <span class="notfound-code" aria-hidden="true">404</span>
+      <h1>Page not found</h1>
+      <p>The page you're looking for doesn't exist or may have moved.</p>
+      <div class="btn-row">
+        <a class="btn" href={base}>Back to home</a>
+        <a class="btn secondary" href={`${base}contact/`}>Contact us</a>
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .notfound {
+    min-height: calc(100vh - 200px);
+    display: flex;
+    align-items: center;
+    padding: 5rem 0;
+  }
+
+  .notfound-inner {
+    text-align: center;
+  }
+
+  .notfound-code {
+    display: block;
+    font-size: clamp(5rem, 20vw, 9rem);
+    font-weight: 900;
+    letter-spacing: -0.04em;
+    line-height: 1;
+    color: var(--accent);
+    opacity: 0.2;
+    margin-bottom: 0.25rem;
+    user-select: none;
+  }
+
+  .notfound-inner h1 { margin-bottom: 0.5rem; }
+  .notfound-inner p   { max-width: 28rem; margin: 0 auto 0; }
+  .notfound-inner .btn-row { justify-content: center; margin-top: 2rem; }
+</style>
