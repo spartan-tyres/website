@@ -1,0 +1,37 @@
+---
+import Layout from "../layouts/Layout.astro";
+
+const services = [
+  { title: "New Tyre Supply & Fitting", desc: "Budget, mid-range and premium tyres for cars, vans and 4x4s — fitted, balanced and ready to drive.", price: "From £45" },
+  { title: "Puncture Repairs", desc: "British Standard BS AU 159 repairs. Safe for the life of the tyre when the damage is in the repairable zone.", price: "From £20" },
+  { title: "Wheel Balancing", desc: "Computer balancing included with every new tyre or available as a standalone service.", price: "From £8 per wheel" },
+  { title: "4-Wheel Laser Alignment", desc: "Full geometry check and adjustment — keeps your tyres lasting longer and your car driving straight.", price: "From £45" },
+  { title: "TPMS Service", desc: "Tyre pressure monitoring sensor replacement and re-programming.", price: "From £35" },
+  { title: "Seasonal Tyre Changeovers", desc: "Winter/summer swaps with safe storage available on request.", price: "From £40" },
+];
+---
+
+<Layout title="Services — Spartan Tyres" path="/services/">
+  <section class="hero" style="padding: 3.5rem 0 2.5rem;">
+    <div class="container">
+      <span class="eyebrow">What we offer</span>
+      <h1>Services &amp; Pricing</h1>
+      <p>Straightforward pricing, pro workmanship. No hidden fees, ever.</p>
+    </div>
+  </section>
+
+  <section>
+    <div class="container">
+      <div class="grid">
+        {services.map((s) => (
+          <div class="card">
+            <h3>{s.title}</h3>
+            <p>{s.desc}</p>
+            <p style="color: var(--accent); font-weight: 600; margin-top: 0.75rem;">{s.price}</p>
+          </div>
+        ))}
+      </div>
+      <p style="margin-top: 2rem; font-size: 0.9rem;">Prices are indicative and may vary by vehicle and tyre. For an exact quote, drop us a message on the <a href="/contact/" style="color: var(--accent);">contact page</a>.</p>
+    </div>
+  </section>
+</Layout>

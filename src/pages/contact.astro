@@ -1,0 +1,79 @@
+---
+import Layout from "../layouts/Layout.astro";
+
+// Paste your Web3Forms access key here after signing up at https://web3forms.com
+// (signup takes ~30 seconds — it's free and submissions will be emailed to you)
+const WEB3FORMS_ACCESS_KEY = "YOUR_WEB3FORMS_ACCESS_KEY";
+---
+
+<Layout title="Contact — Spartan Tyres" path="/contact/">
+  <section class="hero" style="padding: 3.5rem 0 2.5rem;">
+    <div class="container">
+      <span class="eyebrow">Get in touch</span>
+      <h1>Book a fitting or ask a question</h1>
+      <p>Send us a message and we'll get back to you the same day.</p>
+    </div>
+  </section>
+
+  <section>
+    <div class="container">
+      <div style="display: grid; gap: 3rem; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);" class="contact-grid">
+        <div>
+          <h2>Send a message</h2>
+          <form
+            class="form"
+            action="https://api.web3forms.com/submit"
+            method="POST"
+          >
+            <input type="hidden" name="access_key" value={WEB3FORMS_ACCESS_KEY} />
+            <input type="hidden" name="subject" value="New enquiry from Spartan Tyres website" />
+            <input type="hidden" name="from_name" value="Spartan Tyres Website" />
+            <input type="checkbox" name="botcheck" style="display:none" tabindex="-1" autocomplete="off" />
+
+            <div>
+              <label for="name">Name</label>
+              <input id="name" type="text" name="name" required autocomplete="name" />
+            </div>
+            <div>
+              <label for="email">Email</label>
+              <input id="email" type="email" name="email" required autocomplete="email" />
+            </div>
+            <div>
+              <label for="phone">Phone (optional)</label>
+              <input id="phone" type="tel" name="phone" autocomplete="tel" />
+            </div>
+            <div>
+              <label for="message">Message</label>
+              <textarea id="message" name="message" required placeholder="Let us know your vehicle, tyre size if you know it, and what you're after."></textarea>
+            </div>
+            <button type="submit" class="btn">Send message</button>
+          </form>
+        </div>
+
+        <div>
+          <h2>Find us</h2>
+          <div class="info-row" style="margin-top: 0; grid-template-columns: 1fr;">
+            <div class="card">
+              <strong>Address</strong>
+              <p>Update with your address</p>
+            </div>
+            <div class="card">
+              <strong>Phone</strong>
+              <p>Update with your phone number</p>
+            </div>
+            <div class="card">
+              <strong>Opening hours</strong>
+              <p>Mon–Fri 8:30 – 18:00<br />Sat 9:00 – 16:00<br />Sun Closed</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  @media (max-width: 780px) {
+    .contact-grid { grid-template-columns: 1fr !important; gap: 2rem !important; }
+  }
+</style>

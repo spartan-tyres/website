@@ -1,0 +1,79 @@
+---
+import Layout from "../layouts/Layout.astro";
+
+const services = [
+  { title: "New Tyres", desc: "All major brands stocked — budget, mid-range and premium fitted while you wait." },
+  { title: "Puncture Repairs", desc: "Safe, industry-standard repairs from £20. Most done in under 30 minutes." },
+  { title: "Wheel Balancing", desc: "Eliminate vibration and uneven wear with precision balancing on every fit." },
+  { title: "Wheel Alignment", desc: "Four-wheel laser alignment to protect your tyres and your steering." },
+];
+---
+
+<Layout title="Spartan Tyres — Quality Tyres, Fast Fitting">
+  <section class="hero">
+    <div class="container hero-inner">
+      <div class="hero-copy">
+        <span class="eyebrow">Tyres · Repairs · Alignment</span>
+        <h1>Quality tyres.<br />Fast fitting.<br />Honest pricing.</h1>
+        <p>Spartan Tyres is your local specialist for new tyres, puncture repairs and wheel alignment. Walk-in or book ahead — we'll have you back on the road fast.</p>
+        <div class="btn-row">
+          <a class="btn" href="/contact/">Book a fitting</a>
+          <a class="btn secondary" href="/services/">See services</a>
+        </div>
+      </div>
+      <div class="hero-logo" aria-hidden="true">
+        <img src="/img/logo.png" alt="" width="800" height="420" />
+      </div>
+    </div>
+  </section>
+
+  <style>
+    .hero-inner {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 0.9fr);
+      gap: 2rem;
+      align-items: center;
+    }
+    .hero-logo {
+      filter: drop-shadow(0 0 40px rgba(179, 36, 36, 0.35));
+      max-width: 420px;
+      justify-self: end;
+      width: 100%;
+    }
+    .hero-logo img { width: 100%; height: auto; display: block; }
+    @media (max-width: 760px) {
+      .hero-inner { grid-template-columns: 1fr; }
+      .hero-logo { max-width: 260px; justify-self: center; order: -1; margin-bottom: 0.5rem; }
+    }
+  </style>
+
+  <section>
+    <div class="container">
+      <div class="section-head">
+        <h2>What we do</h2>
+        <p>Everything your vehicle needs to stay safe and roadworthy.</p>
+      </div>
+      <div class="grid">
+        {services.map((s) => (
+          <div class="card">
+            <h3>{s.title}</h3>
+            <p>{s.desc}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="container">
+      <div class="section-head">
+        <h2>Why Spartan?</h2>
+      </div>
+      <div class="grid">
+        <div class="card"><h3>No-nonsense pricing</h3><p>Fixed, transparent prices — no surprise add-ons at the till.</p></div>
+        <div class="card"><h3>Same-day fitting</h3><p>Walk-in welcome. Most fits take 20–40 minutes.</p></div>
+        <div class="card"><h3>Trusted brands</h3><p>Michelin, Continental, Pirelli, Bridgestone and more in stock.</p></div>
+      </div>
+    </div>
+  </section>
+</Layout>
