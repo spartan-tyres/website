@@ -2,12 +2,12 @@
 import Layout from "../layouts/Layout.astro";
 
 const REVIEW_URL = "https://spartan-tyres.com/review/";
-const SMS_BODY = `Hi! Thanks for visiting Spartan Tyres. We'd love to hear how we did — please rate us here: ${REVIEW_URL}`;
+const SMS_BODY = `Hi! Thanks for visiting Spartan Tyres. We'd love to hear how we did, please rate us here: ${REVIEW_URL}`;
 const SMS_HREF = `sms:?body=${encodeURIComponent(SMS_BODY)}`;
 ---
 
 <Layout
-  title="Send Review Link – Spartan Tyres"
+  title="Send Review Link | Spartan Tyres"
   description="Send a review request text message to your customers."
   path="/send-review/"
 >
@@ -44,7 +44,7 @@ const SMS_HREF = `sms:?body=${encodeURIComponent(SMS_BODY)}`;
 
       <div class="preview-card">
         <h2>What your customer sees</h2>
-        <p>They tap the link and land on this page — they rate you 1 to 5 stars. Five stars sends them straight to Google to leave a review. Anything lower just thanks them for their feedback.</p>
+        <p>They tap the link and land on this page, they rate you 1 to 5 stars. Five stars sends them straight to Google to leave a review. Anything lower just thanks them for their feedback.</p>
         <a href="/review/" class="btn secondary" target="_blank" rel="noopener noreferrer">Preview the review page</a>
       </div>
     </div>
