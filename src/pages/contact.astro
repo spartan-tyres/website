@@ -1,9 +1,7 @@
 ---
 import Layout from "../layouts/Layout.astro";
 
-// Paste your Web3Forms access key here after signing up at https://web3forms.com
-// (signup takes ~30 seconds — it's free and submissions will be emailed to you)
-const WEB3FORMS_ACCESS_KEY = "YOUR_WEB3FORMS_ACCESS_KEY";
+const WEB3FORMS_ACCESS_KEY = "03cd71bd-2eb2-41df-80a4-db4c00204b2c";
 ---
 
 <Layout title="Contact — Spartan Tyres">
@@ -28,6 +26,8 @@ const WEB3FORMS_ACCESS_KEY = "YOUR_WEB3FORMS_ACCESS_KEY";
             <input type="hidden" name="access_key" value={WEB3FORMS_ACCESS_KEY} />
             <input type="hidden" name="subject" value="New enquiry from Spartan Tyres website" />
             <input type="hidden" name="from_name" value="Spartan Tyres Website" />
+            <input type="hidden" name="replyto" value="email" />
+            <input type="hidden" name="redirect" value="https://spartan-tyres.com/contact/?sent=1" />
             <input type="checkbox" name="botcheck" style="display:none" tabindex="-1" autocomplete="off" />
 
             <div>
