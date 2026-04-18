@@ -53,8 +53,9 @@ p { margin: 0 0 1em; color: var(--muted); }
 .brand-logo {
   display: block;
   height: 44px;
-  width: auto;
+  width: 44px;
   flex-shrink: 0;
+  border-radius: 50%;
 }
 .nav { display: flex; gap: 1.25rem; font-size: 0.95rem; }
 .nav a { color: var(--muted); transition: color 0.15s; }

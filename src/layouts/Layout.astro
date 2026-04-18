@@ -29,8 +29,8 @@ const normalized = path.endsWith("/") ? path : `${path}/`;
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <link rel="icon" type="image/png" href={`${base}img/logo-icon.png`} />
-    <link rel="apple-touch-icon" href={`${base}img/logo-icon.png`} />
+    <link rel="icon" type="image/jpeg" href={`${base}img/logo-icon.jpg`} />
+    <link rel="apple-touch-icon" href={`${base}img/logo-icon.jpg`} />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="generator" content={Astro.generator} />
     <meta name="description" content={description} />
@@ -39,7 +39,7 @@ const normalized = path.endsWith("/") ? path : `${path}/`;
   <body>
     <header class="site-header">
       <div class="inner">
-        <a href={base} class="brand" aria-label="Spartan Tyres home"><img src={`${base}img/logo.png`} alt="Spartan Tyres" class="brand-logo" width="140" height="70" /></a>
+        <a href={base} class="brand" aria-label="Spartan Tyres home"><img src={`${base}img/logo.jpg`} alt="Spartan Tyres" class="brand-logo" width="44" height="44" /></a>
         <nav class="nav">
           {nav.map((item) => (
             <a href={item.href} class={normalized === item.href ? "active" : ""}>{item.label}</a>

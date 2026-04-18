@@ -23,7 +23,7 @@ const services = [
         </div>
       </div>
       <div class="hero-logo" aria-hidden="true">
-        <img src={`${base}img/logo.png`} alt="" width="800" height="420" />
+        <img src={`${base}img/logo.jpg`} alt="" width="800" height="800" />
       </div>
     </div>
   </section>
@@ -36,12 +36,17 @@ const services = [
       align-items: center;
     }
     .hero-logo {
-      filter: drop-shadow(0 0 40px rgba(179, 36, 36, 0.35));
       max-width: 420px;
       justify-self: end;
       width: 100%;
     }
-    .hero-logo img { width: 100%; height: auto; display: block; }
+    .hero-logo img {
+      width: 100%;
+      height: auto;
+      display: block;
+      border-radius: 50%;
+      box-shadow: 0 0 60px rgba(255, 107, 26, 0.25);
+    }
     @media (max-width: 760px) {
       .hero-inner { grid-template-columns: 1fr; }
       .hero-logo { max-width: 260px; justify-self: center; order: -1; margin-bottom: 0.5rem; }
