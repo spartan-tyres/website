@@ -1,6 +1,8 @@
 ---
 import Layout from "../layouts/Layout.astro";
 
+const base = import.meta.env.BASE_URL;
+
 const services = [
   { title: "New Tyre Supply & Fitting", desc: "Budget, mid-range and premium tyres for cars, vans and 4x4s — fitted, balanced and ready to drive.", price: "From £45" },
   { title: "Puncture Repairs", desc: "British Standard BS AU 159 repairs. Safe for the life of the tyre when the damage is in the repairable zone.", price: "From £20" },
@@ -11,7 +13,7 @@ const services = [
 ];
 ---
 
-<Layout title="Services — Spartan Tyres" path="/services/">
+<Layout title="Services — Spartan Tyres">
   <section class="hero" style="padding: 3.5rem 0 2.5rem;">
     <div class="container">
       <span class="eyebrow">What we offer</span>
@@ -31,7 +33,7 @@ const services = [
           </div>
         ))}
       </div>
-      <p style="margin-top: 2rem; font-size: 0.9rem;">Prices are indicative and may vary by vehicle and tyre. For an exact quote, drop us a message on the <a href="/contact/" style="color: var(--accent);">contact page</a>.</p>
+      <p style="margin-top: 2rem; font-size: 0.9rem;">Prices are indicative and may vary by vehicle and tyre. For an exact quote, drop us a message on the <a href={`${base}contact/`} style="color: var(--accent);">contact page</a>.</p>
     </div>
   </section>
 </Layout>
