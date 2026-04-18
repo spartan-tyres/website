@@ -125,3 +125,34 @@ section + section { border-top: 1px solid var(--border); }
   font-size: 0.9rem;
   text-align: center;
 }
+.footer-tiktok {
+  display: flex; align-items: center; justify-content: center;
+  gap: 0.6rem; flex-wrap: wrap; margin-bottom: 0.75rem;
+}
+.footer-tiktok a {
+  display: inline-flex; align-items: center; gap: 0.35rem;
+  color: var(--text); font-weight: 600; transition: color 0.15s;
+}
+.footer-tiktok a:hover { color: var(--accent); }
+.footer-tiktok span { color: var(--muted); font-size: 0.875rem; }
+
+/* Scroll reveal */
+@keyframes flame-rise {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+    box-shadow: 0 0 0 rgba(179, 36, 36, 0);
+  }
+  45% {
+    box-shadow: 0 6px 24px rgba(179, 36, 36, 0.13);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    box-shadow: 0 0 0 rgba(179, 36, 36, 0);
+  }
+}
+.will-reveal { opacity: 0; }
+.will-reveal.revealed {
+  animation: flame-rise 0.52s cubic-bezier(0.22, 0.9, 0.32, 1) both;
+}
