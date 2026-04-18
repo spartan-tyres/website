@@ -25,6 +25,9 @@ jobs:
         uses: withastro/action@v3
         with:
           node-version: 22
+        env:
+          SITE_URL: https://spartan-tyres.com
+          SITE_BASE: /
 
   deploy:
     needs: build
