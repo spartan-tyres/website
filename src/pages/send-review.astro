@@ -1,0 +1,155 @@
+---
+import Layout from "../layouts/Layout.astro";
+
+const REVIEW_URL = "https://spartan-tyres.com/review/";
+const SMS_BODY = `Hi! Thanks for visiting Spartan Tyres. We'd love to hear how we did — please rate us here: ${REVIEW_URL}`;
+const SMS_HREF = `sms:?body=${encodeURIComponent(SMS_BODY)}`;
+---
+
+<Layout
+  title="Send Review Link – Spartan Tyres"
+  description="Send a review request text message to your customers."
+  path="/send-review/"
+>
+  <section class="send-section">
+    <div class="container">
+      <div class="send-card">
+        <p class="eyebrow">For Spartan Tyres staff</p>
+        <h1>Send a review request</h1>
+        <p class="subtitle">After a job, send this message to your customer so they can rate their experience.</p>
+
+        <div class="message-box">
+          <div class="message-bubble">
+            <p id="sms-text">{SMS_BODY}</p>
+          </div>
+        </div>
+
+        <div class="action-row">
+          <a href={SMS_HREF} class="btn">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true">
+              <path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/>
+            </svg>
+            Open in Messages
+          </a>
+          <button id="copy-btn" class="btn secondary" type="button">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true">
+              <path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/>
+            </svg>
+            <span id="copy-label">Copy message</span>
+          </button>
+        </div>
+
+        <p class="tip">Tap <strong>Open in Messages</strong> on your phone to send directly, or copy the text and paste it into any messaging app.</p>
+      </div>
+
+      <div class="preview-card">
+        <h2>What your customer sees</h2>
+        <p>They tap the link and land on this page — they rate you 1 to 5 stars. Five stars sends them straight to Google to leave a review. Anything lower just thanks them for their feedback.</p>
+        <a href="/review/" class="btn secondary" target="_blank" rel="noopener noreferrer">Preview the review page</a>
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<script define:vars={{ SMS_BODY }}>
+  document.getElementById("copy-btn").addEventListener("click", async () => {
+    const label = document.getElementById("copy-label");
+    try {
+      await navigator.clipboard.writeText(SMS_BODY);
+      label.textContent = "Copied!";
+      setTimeout(() => { label.textContent = "Copy message"; }, 2000);
+    } catch {
+      const ta = document.createElement("textarea");
+      ta.value = SMS_BODY;
+      ta.style.position = "fixed";
+      ta.style.opacity = "0";
+      document.body.appendChild(ta);
+      ta.select();
+      document.execCommand("copy");
+      document.body.removeChild(ta);
+      label.textContent = "Copied!";
+      setTimeout(() => { label.textContent = "Copy message"; }, 2000);
+    }
+  });
+</script>
+
+<style>
+  .send-section {
+    min-height: calc(100vh - 130px);
+    padding: 4rem 0;
+    background:
+      radial-gradient(700px 400px at 80% 0%, rgba(179, 36, 36, 0.15), transparent 60%),
+      var(--bg);
+  }
+
+  .send-card, .preview-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 2.5rem;
+    max-width: 540px;
+    margin: 0 auto;
+  }
+
+  .preview-card {
+    margin-top: 1.25rem;
+    text-align: left;
+  }
+
+  .preview-card h2 { font-size: 1.1rem; margin-bottom: 0.4rem; }
+  .preview-card p  { margin-bottom: 1.25rem; font-size: 0.95rem; }
+
+  .eyebrow {
+    font-size: 0.78rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 0.5rem;
+  }
+
+  h1 { font-size: clamp(1.5rem, 4vw, 2rem); margin-bottom: 0.5rem; }
+
+  .subtitle { margin-bottom: 1.75rem; }
+
+  .message-box {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .message-bubble {
+    background: var(--accent);
+    color: white;
+    border-radius: 18px 18px 4px 18px;
+    padding: 0.85rem 1.1rem;
+    display: inline-block;
+    max-width: 100%;
+    text-align: left;
+  }
+
+  .message-bubble p {
+    margin: 0;
+    color: white;
+    font-size: 0.95rem;
+    line-height: 1.5;
+    word-break: break-word;
+  }
+
+  .action-row {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+    margin-bottom: 1.25rem;
+  }
+
+  .tip {
+    font-size: 0.82rem;
+    color: var(--muted);
+    margin: 0;
+    line-height: 1.5;
+  }
+
+  .tip strong { color: var(--text); }
+</style>
