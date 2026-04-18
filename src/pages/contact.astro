@@ -55,17 +55,26 @@ const WEB3FORMS_ACCESS_KEY = "03cd71bd-2eb2-41df-80a4-db4c00204b2c";
           <h2>Find us</h2>
           <div class="info-row" style="margin-top: 0; grid-template-columns: 1fr;">
             <div class="card">
-              <strong>Address</strong>
-              <p>Update with your address</p>
-            </div>
-            <div class="card">
-              <strong>Phone</strong>
-              <p>Update with your phone number</p>
+              <strong>Area served</strong>
+              <p>Staines-upon-Thames, Surrey and surrounding areas including Ashford, Egham, Shepperton and Sunbury-on-Thames.</p>
             </div>
             <div class="card">
               <strong>Opening hours</strong>
               <p>Open 24 hours, 7 days a week</p>
             </div>
+          </div>
+
+          <div class="map-wrap">
+            <iframe
+              title="Spartan Tyres — Staines-upon-Thames, Surrey"
+              src="https://maps.google.com/maps?q=Staines-upon-Thames,Surrey,UK&t=&z=13&ie=UTF8&iwloc=&output=embed"
+              width="100%"
+              height="320"
+              style="border:0;"
+              allowfullscreen
+              loading="lazy"
+              referrerpolicy="no-referrer-when-downgrade"
+            ></iframe>
           </div>
         </div>
       </div>
@@ -78,6 +87,13 @@ const WEB3FORMS_ACCESS_KEY = "03cd71bd-2eb2-41df-80a4-db4c00204b2c";
 <style>
   @media (max-width: 780px) {
     .contact-grid { grid-template-columns: 1fr !important; gap: 2rem !important; }
+  }
+
+  .map-wrap {
+    margin-top: 1rem;
+    border-radius: var(--radius);
+    overflow: hidden;
+    border: 1px solid var(--border);
   }
 
   .toast {
