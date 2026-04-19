@@ -9,6 +9,13 @@ const services = [
   { title: "Wheel Balancing", desc: "Eliminate vibration and uneven wear with precision balancing on every fit." },
 ];
 
+const brands = [
+  { name: "Michelin",    domain: "michelin.com" },
+  { name: "Bridgestone", domain: "bridgestone.com" },
+  { name: "Continental", domain: "continental-tires.com" },
+  { name: "Goodyear",    domain: "goodyear.com" },
+  { name: "Pirelli",     domain: "pirelli.com" },
+];
 ---
 
 <Layout title="Spartan Tyres | Quality Tyres, Fast Fitting">
@@ -44,6 +51,27 @@ const services = [
       Message us on WhatsApp
     </span>
   </a>
+
+  <section class="brands-section">
+    <div class="container">
+      <p class="brands-label">Brands we stock</p>
+      <div class="brands-strip">
+        {brands.map((b) => (
+          <div class="brand-tile">
+            <img
+              src={`https://logo.clearbit.com/${b.domain}`}
+              alt={b.name}
+              width="140"
+              height="56"
+              loading="lazy"
+              onerror="this.style.display='none';this.nextElementSibling.style.display='block'"
+            />
+            <span class="brand-fallback">{b.name}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
 
   <section>
     <div class="container">
@@ -142,6 +170,56 @@ const services = [
     border-radius: 50px;
     color: #fff;
     white-space: nowrap;
+  }
+
+  /* Brand logos */
+  .brands-section {
+    padding: 2.5rem 0;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    background: var(--bg-alt);
+  }
+  .brands-label {
+    text-align: center;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--muted);
+    margin: 0 0 1.75rem;
+  }
+  .brands-strip {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1.25rem;
+    flex-wrap: wrap;
+  }
+  .brand-tile {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem 1.75rem;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--surface);
+    min-width: 140px;
+  }
+  .brand-tile img {
+    display: block;
+    width: auto;
+    height: 48px;
+    object-fit: contain;
+    filter: grayscale(1) brightness(1.9);
+    transition: filter 0.25s;
+  }
+  .brand-tile:hover img { filter: grayscale(0) brightness(1); }
+  .brand-fallback {
+    display: none;
+    font-size: 1rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--muted);
   }
 
 </style>
