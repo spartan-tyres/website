@@ -10,14 +10,14 @@ const services = [
 ];
 
 const brands = [
-  { name: "Michelin",     size: 32, weight: 900, spacing: "0.05em",  italic: false },
-  { name: "Continental",  size: 22, weight: 300, spacing: "0.18em",  italic: false },
-  { name: "Pirelli",      size: 30, weight: 900, spacing: "0.02em",  italic: true  },
-  { name: "Bridgestone",  size: 20, weight: 700, spacing: "0.04em",  italic: false },
-  { name: "Goodyear",     size: 28, weight: 800, spacing: "0.0em",   italic: false },
-  { name: "Dunlop",       size: 30, weight: 900, spacing: "0.08em",  italic: false },
-  { name: "Yokohama",     size: 20, weight: 600, spacing: "0.14em",  italic: false },
-  { name: "Hankook",      size: 26, weight: 800, spacing: "0.06em",  italic: false },
+  { name: "Michelin",    style: "font-size:1.9rem;font-weight:900;letter-spacing:0.04em;" },
+  { name: "Continental", style: "font-size:1.05rem;font-weight:300;letter-spacing:0.22em;" },
+  { name: "Pirelli",     style: "font-size:1.8rem;font-weight:900;font-style:italic;letter-spacing:0.01em;" },
+  { name: "Bridgestone", style: "font-size:1.05rem;font-weight:700;letter-spacing:0.03em;" },
+  { name: "Goodyear",    style: "font-size:1.6rem;font-weight:800;letter-spacing:-0.01em;" },
+  { name: "Dunlop",      style: "font-size:1.7rem;font-weight:900;letter-spacing:0.07em;" },
+  { name: "Yokohama",    style: "font-size:1.0rem;font-weight:600;letter-spacing:0.16em;" },
+  { name: "Hankook",     style: "font-size:1.4rem;font-weight:800;letter-spacing:0.05em;" },
 ];
 ---
 
@@ -61,26 +61,7 @@ const brands = [
       <div class="brands-strip">
         {brands.map((b) => (
           <div class="brand-logo">
-            <svg
-              height="44"
-              viewBox={`0 0 ${b.name.length * b.size * 0.62} 44`}
-              xmlns="http://www.w3.org/2000/svg"
-              aria-label={b.name}
-              role="img"
-            >
-              <text
-                x="50%"
-                y="50%"
-                dominant-baseline="central"
-                text-anchor="middle"
-                font-family="system-ui, -apple-system, 'Segoe UI', sans-serif"
-                font-size={b.size}
-                font-weight={b.weight}
-                font-style={b.italic ? "italic" : "normal"}
-                letter-spacing={b.spacing}
-                fill="currentColor"
-              >{b.name}</text>
-            </svg>
+            <span style={b.style}>{b.name}</span>
           </div>
         ))}
       </div>
@@ -224,5 +205,11 @@ const brands = [
     border-color: var(--accent);
     box-shadow: 0 0 16px rgba(179, 36, 36, 0.15);
   }
-  .brand-logo svg { display: block; }
+  .brand-logo span {
+    display: block;
+    line-height: 1;
+    color: inherit;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
 </style>
