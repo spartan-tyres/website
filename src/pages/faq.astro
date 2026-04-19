@@ -1,0 +1,150 @@
+---
+import Layout from "../layouts/Layout.astro";
+
+const base = import.meta.env.BASE_URL;
+
+const faqs = [
+  {
+    q: "Do I need to book in advance?",
+    a: "No, walk-ins are always welcome. If you'd like to guarantee a specific time slot or know we'll have your tyre size in stock, drop us a message via the contact page and we'll get you sorted.",
+  },
+  {
+    q: "How long does tyre fitting take?",
+    a: "Most single-tyre fits take 20 to 30 minutes. A full set of four is typically done within an hour. We'll give you a time estimate when you arrive.",
+  },
+  {
+    q: "What tyre brands do you stock?",
+    a: "We carry a wide range covering budget, mid-range and premium brands including Michelin, Continental, Pirelli, Bridgestone, Goodyear and more. If you have a specific brand or run-flat requirement, let us know ahead of time and we'll confirm availability.",
+  },
+  {
+    q: "How do I find out what tyre size I need?",
+    a: "Your tyre size is printed on the sidewall of your current tyres, for example 205/55 R16. You can also find the recommended size in your vehicle handbook or on the sticker inside your driver's door jamb.",
+  },
+  {
+    q: "Can you repair a puncture, or will I need a new tyre?",
+    a: "Most punctures in the central tread area can be safely repaired to British Standard BS AU 159 and will last the life of the tyre. Damage to the sidewall, near the shoulder, or a large gash cannot be repaired safely. In those cases we'll advise a replacement and show you exactly why.",
+  },
+  {
+    q: "Do you cover areas outside Staines-upon-Thames?",
+    a: "We're based in the Staines-upon-Thames / Surrey area and serve customers from Ashford, Egham, Shepperton, Sunbury-on-Thames, Weybridge and beyond. Get in touch if you're unsure whether we cover your area.",
+  },
+  {
+    q: "What is TPMS and do I need it serviced?",
+    a: "TPMS (Tyre Pressure Monitoring System) is the sensor inside your wheel that triggers the dashboard warning light when pressure drops. When fitting new tyres or swapping wheels, the sensors should be inspected and re-programmed. We offer full TPMS replacement and re-programming from £70.",
+  },
+  {
+    q: "My tyre pressure warning light is on. What should I do?",
+    a: "First, check and correct the pressure in all four tyres (including the spare if your car has one). If the light stays on after inflating to the correct pressures, you may have a slow puncture or a faulty TPMS sensor. Come and see us and we can diagnose it quickly.",
+  },
+  {
+    q: "What payment methods do you accept?",
+    a: "We accept cash and all major debit and credit cards. Please ask when booking if you need an invoice for business purposes.",
+  },
+];
+---
+
+<Layout
+  title="FAQ | Spartan Tyres"
+  description="Answers to common questions about tyre fitting, puncture repairs, TPMS and more from Spartan Tyres in Staines-upon-Thames, Surrey."
+>
+  <section class="hero" style="padding: 3.5rem 0 2.5rem;">
+    <div class="container">
+      <span class="eyebrow">Got a question?</span>
+      <h1>Frequently Asked Questions</h1>
+      <p>Quick answers about our services, booking and pricing. Can't find what you need? <a href={`${base}contact/`} class="inline-link">Drop us a message.</a></p>
+    </div>
+  </section>
+
+  <section>
+    <div class="container">
+      <div class="faq-list">
+        {faqs.map((item, i) => (
+          <details class="faq-item" open={i === 0}>
+            <summary class="faq-question">
+              {item.q}
+              <span class="faq-icon" aria-hidden="true"></span>
+            </summary>
+            <div class="faq-answer">
+              <p>{item.a}</p>
+            </div>
+          </details>
+        ))}
+      </div>
+
+      <div class="faq-cta card">
+        <h3>Still have a question?</h3>
+        <p>Send us a message and we'll get back to you the same day.</p>
+        <a class="btn" href={`${base}contact/`}>Get in touch</a>
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .inline-link { color: var(--accent); text-decoration: underline; }
+
+  .faq-list {
+    display: grid;
+    gap: 0.5rem;
+    max-width: 48rem;
+  }
+
+  .faq-item {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    transition: border-color 0.15s;
+  }
+  .faq-item[open] { border-color: var(--accent); }
+
+  .faq-question {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    padding: 1.1rem 1.25rem;
+    font-weight: 600;
+    font-size: 1rem;
+    color: var(--text);
+    cursor: pointer;
+    list-style: none;
+    user-select: none;
+  }
+  .faq-question::-webkit-details-marker { display: none; }
+
+  .faq-icon {
+    flex-shrink: 0;
+    width: 1.1rem;
+    height: 1.1rem;
+    position: relative;
+    opacity: 0.6;
+  }
+  .faq-icon::before,
+  .faq-icon::after {
+    content: '';
+    position: absolute;
+    background: var(--text);
+    border-radius: 2px;
+    transition: transform 0.2s ease, opacity 0.2s ease;
+  }
+  .faq-icon::before { width: 100%; height: 2px; top: 50%; transform: translateY(-50%); }
+  .faq-icon::after  { width: 2px; height: 100%; left: 50%; transform: translateX(-50%); }
+  .faq-item[open] .faq-icon::after { transform: translateX(-50%) rotate(90deg); opacity: 0; }
+
+  .faq-answer {
+    padding: 0 1.25rem 1.1rem;
+  }
+  .faq-answer p { margin: 0; }
+
+  .faq-cta {
+    margin-top: 3rem;
+    max-width: 28rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  .faq-cta h3 { margin-bottom: 0; }
+  .faq-cta p { margin: 0; }
+  .faq-cta .btn { margin-top: 0.5rem; align-self: flex-start; }
+</style>

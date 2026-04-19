@@ -1,0 +1,174 @@
+---
+import Layout from "../layouts/Layout.astro";
+
+const GOOGLE_REVIEW_URL = "https://g.page/r/REPLACE_WITH_YOUR_PLACE_ID/review";
+---
+
+<Layout
+  title="Leave a Review – Spartan Tyres"
+  description="Rate your experience with Spartan Tyres and leave a Google review."
+  path="/review/"
+>
+  <section class="review-section">
+    <div class="container">
+      <div class="review-card">
+        <div id="rating-view">
+          <p class="eyebrow">Your feedback matters</p>
+          <h1>How was your experience?</h1>
+          <p class="subtitle">Tap a star to rate your visit to Spartan Tyres.</p>
+
+          <div class="stars" role="group" aria-label="Rate your experience from 1 to 5 stars">
+            {[1, 2, 3, 4, 5].map((n) => (
+              <button
+                class="star-btn"
+                data-value={n}
+                aria-label={`${n} star${n > 1 ? "s" : ""}`}
+                type="button"
+              >
+                ★
+              </button>
+            ))}
+          </div>
+          <p class="hint">1 = Poor &nbsp;·&nbsp; 5 = Excellent</p>
+        </div>
+
+        <div id="thanks-view" hidden>
+          <div class="thanks-icon" aria-hidden="true">✓</div>
+          <h2 id="thanks-heading">Thank you!</h2>
+          <p id="thanks-msg"></p>
+          <a href="/" class="btn secondary" style="margin-top:0.5rem">Back to home</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<script define:vars={{ GOOGLE_REVIEW_URL }}>
+  const stars = document.querySelectorAll(".star-btn");
+  const ratingView = document.getElementById("rating-view");
+  const thanksView = document.getElementById("thanks-view");
+  const thanksHeading = document.getElementById("thanks-heading");
+  const thanksMsg = document.getElementById("thanks-msg");
+
+  stars.forEach((btn) => {
+    btn.addEventListener("mouseenter", () => highlight(Number(btn.dataset.value)));
+    btn.addEventListener("mouseleave", () => highlight(0));
+    btn.addEventListener("click", () => submit(Number(btn.dataset.value)));
+  });
+
+  function highlight(upTo) {
+    stars.forEach((b) => b.classList.toggle("lit", Number(b.dataset.value) <= upTo));
+  }
+
+  function submit(rating) {
+    ratingView.hidden = true;
+    thanksView.hidden = false;
+
+    if (rating === 5) {
+      thanksHeading.textContent = "Thank you so much!";
+      thanksMsg.textContent = "We're thrilled you had a great experience. We'd love it if you could share it on Google — it really helps us out!";
+
+      const link = document.createElement("a");
+      link.href = GOOGLE_REVIEW_URL;
+      link.target = "_blank";
+      link.rel = "noopener noreferrer";
+      link.className = "btn";
+      link.style.marginTop = "1rem";
+      link.textContent = "Leave a Google Review ★";
+      thanksView.insertBefore(link, thanksView.querySelector(".btn.secondary"));
+
+      setTimeout(() => { window.open(GOOGLE_REVIEW_URL, "_blank", "noopener,noreferrer"); }, 800);
+    } else {
+      thanksHeading.textContent = "Thanks for your feedback!";
+      thanksMsg.textContent = "We appreciate you letting us know. We're always working to improve and your feedback helps us do that.";
+    }
+  }
+</script>
+
+<style>
+  .review-section {
+    min-height: calc(100vh - 130px);
+    display: flex;
+    align-items: center;
+    padding: 3rem 0;
+    background:
+      radial-gradient(700px 400px at 80% 0%, rgba(179, 36, 36, 0.18), transparent 60%),
+      radial-gradient(500px 400px at 10% 100%, rgba(138, 90, 59, 0.08), transparent 70%),
+      var(--bg);
+  }
+
+  .review-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 3rem 2.5rem;
+    max-width: 480px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .eyebrow {
+    font-size: 0.78rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 0.5rem;
+  }
+
+  h1 { font-size: clamp(1.6rem, 4vw, 2.2rem); margin-bottom: 0.5rem; }
+
+  .subtitle { margin-bottom: 2rem; }
+
+  .stars {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .star-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 3rem;
+    color: var(--border);
+    transition: color 0.1s, transform 0.1s;
+    padding: 0.1rem 0.2rem;
+    line-height: 1;
+  }
+
+  .star-btn:hover,
+  .star-btn.lit { color: #f5a623; }
+
+  .star-btn:active { transform: scale(0.9); }
+
+  .hint {
+    font-size: 0.8rem;
+    color: var(--muted);
+    margin: 0;
+  }
+
+  #thanks-view { animation: fade-in 0.4s ease both; }
+
+  @keyframes fade-in {
+    from { opacity: 0; transform: translateY(12px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .thanks-icon {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: var(--accent);
+    color: white;
+    font-size: 1.75rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1.25rem;
+  }
+
+  #thanks-view h2 { margin-bottom: 0.5rem; }
+
+  #thanks-view .btn { display: inline-flex; }
+</style>

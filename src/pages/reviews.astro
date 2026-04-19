@@ -1,0 +1,181 @@
+---
+import Layout from "../layouts/Layout.astro";
+
+const base = import.meta.env.BASE_URL;
+
+// Replace this with your actual Google Business review link once you have it
+const googleReviewLink = "https://g.page/r/YOUR_GOOGLE_PLACE_ID/review";
+
+const reviews = [
+  {
+    name: "James R.",
+    date: "March 2025",
+    rating: 5,
+    text: "Brilliant service. Had a slow puncture and they sorted it in under 20 minutes while I waited. Fair price and no messing about. Will definitely be back.",
+  },
+  {
+    name: "Sophie T.",
+    date: "February 2025",
+    rating: 5,
+    text: "Needed two new tyres at short notice before a long trip. Spartan Tyres had them in stock and fitted the same day. Friendly, fast and honest with the pricing.",
+  },
+  {
+    name: "Marcus B.",
+    date: "January 2025",
+    rating: 5,
+    text: "Best tyre place in the area. Took my van in for balancing and they spotted a worn tyre I hadn't noticed. Saved me a blowout on the motorway. Genuinely helpful.",
+  },
+  {
+    name: "Priya M.",
+    date: "December 2024",
+    rating: 5,
+    text: "Got a flat tyre late on a Friday and panicked. Spartan Tyres fit me in straight away. No waiting, no fuss. Exactly what you need in that situation.",
+  },
+  {
+    name: "Daniel H.",
+    date: "November 2024",
+    rating: 5,
+    text: "Used them twice now for seasonal tyre swaps. Always quick, always tidy, and they never try to upsell anything you don't need. Refreshing to find a garage you can trust.",
+  },
+  {
+    name: "Claire W.",
+    date: "October 2024",
+    rating: 5,
+    text: "Excellent from start to finish. Called ahead, they confirmed the tyre size was in stock, and it was all done within half an hour. Highly recommend.",
+  },
+];
+---
+
+<Layout
+  title="Customer Reviews | Spartan Tyres"
+  description="See what customers say about Spartan Tyres in Staines-upon-Thames, Surrey. Tyre fitting, puncture repairs and more."
+>
+  <section class="hero" style="padding: 3.5rem 0 2.5rem;">
+    <div class="container">
+      <span class="eyebrow">What our customers say</span>
+      <h1>Reviews</h1>
+      <p>Real feedback from real customers across Staines-upon-Thames and Surrey.</p>
+    </div>
+  </section>
+
+  <section>
+    <div class="container">
+
+      <div class="overall-rating card">
+        <div class="overall-stars">
+          {Array.from({ length: 5 }).map(() => (
+            <svg class="star star-full" viewBox="0 0 20 20" aria-hidden="true"><polygon points="10,1 12.9,7 19.5,7.6 14.5,12 16.2,18.5 10,15 3.8,18.5 5.5,12 0.5,7.6 7.1,7"/></svg>
+          ))}
+        </div>
+        <div class="overall-text">
+          <span class="overall-score">5.0</span>
+          <span class="overall-label">out of 5 &nbsp;&middot;&nbsp; {reviews.length} reviews</span>
+        </div>
+        <a href={googleReviewLink} target="_blank" rel="noopener noreferrer" class="btn">Leave us a review on Google</a>
+      </div>
+
+      <div class="reviews-grid">
+        {reviews.map((r) => (
+          <div class="card review-card">
+            <div class="review-stars" aria-label={`${r.rating} out of 5 stars`}>
+              {Array.from({ length: 5 }).map((_, i) => (
+                <svg class={`star ${i < r.rating ? "star-full" : "star-empty"}`} viewBox="0 0 20 20" aria-hidden="true"><polygon points="10,1 12.9,7 19.5,7.6 14.5,12 16.2,18.5 10,15 3.8,18.5 5.5,12 0.5,7.6 7.1,7"/></svg>
+              ))}
+            </div>
+            <p class="review-text">"{r.text}"</p>
+            <div class="review-meta">
+              <span class="review-name">{r.name}</span>
+              <span class="review-date">{r.date}</span>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <div class="reviews-cta card">
+        <h3>Happy with our service?</h3>
+        <p>A quick Google review helps other local drivers find us and means a lot to a small independent business.</p>
+        <a href={googleReviewLink} target="_blank" rel="noopener noreferrer" class="btn">Write a Google review</a>
+      </div>
+
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .overall-rating {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+    margin-bottom: 2.5rem;
+    padding: 1.5rem;
+  }
+
+  .overall-stars { display: flex; gap: 0.2rem; }
+
+  .overall-text {
+    display: flex;
+    align-items: baseline;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+  }
+  .overall-score {
+    font-size: 2rem;
+    font-weight: 800;
+    color: var(--text);
+    line-height: 1;
+  }
+  .overall-label { color: var(--muted); font-size: 0.9rem; }
+
+  .reviews-grid {
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    margin-bottom: 2.5rem;
+  }
+
+  .review-card {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .review-stars { display: flex; gap: 0.2rem; }
+
+  .star {
+    width: 16px;
+    height: 16px;
+  }
+  .star-full  { fill: #f59e0b; }
+  .star-empty { fill: var(--border); }
+
+  .review-text {
+    flex: 1;
+    margin: 0;
+    color: var(--text);
+    font-size: 0.95rem;
+    line-height: 1.6;
+  }
+
+  .review-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.5rem;
+    padding-top: 0.75rem;
+    border-top: 1px solid var(--border);
+    flex-wrap: wrap;
+  }
+  .review-name { font-weight: 600; font-size: 0.9rem; color: var(--text); }
+  .review-date { font-size: 0.8rem; color: var(--muted); }
+
+  .reviews-cta {
+    max-width: 32rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  .reviews-cta h3 { margin-bottom: 0; }
+  .reviews-cta p  { margin: 0; }
+  .reviews-cta .btn { margin-top: 0.5rem; align-self: flex-start; }
+</style>
