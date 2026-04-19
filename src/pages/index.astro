@@ -9,16 +9,6 @@ const services = [
   { title: "Wheel Balancing", desc: "Eliminate vibration and uneven wear with precision balancing on every fit." },
 ];
 
-const brands = [
-  { name: "Michelin",    domain: "michelin.com" },
-  { name: "Continental", domain: "continental-tires.com" },
-  { name: "Pirelli",     domain: "pirelli.com" },
-  { name: "Bridgestone", domain: "bridgestone.com" },
-  { name: "Goodyear",    domain: "goodyear.com" },
-  { name: "Dunlop",      domain: "dunloptires.com" },
-  { name: "Yokohama",    domain: "yokohamatire.com" },
-  { name: "Hankook",     domain: "hankooktire.com" },
-];
 ---
 
 <Layout title="Spartan Tyres | Quality Tyres, Fast Fitting">
@@ -54,27 +44,6 @@ const brands = [
       Message us on WhatsApp
     </span>
   </a>
-
-  <section class="brands-section">
-    <div class="container">
-      <p class="brands-label">Brands we stock</p>
-      <div class="brands-strip">
-        {brands.map((b) => (
-          <div class="brand-logo">
-            <img
-              src={`https://logo.clearbit.com/${b.domain}`}
-              alt={b.name}
-              width="120"
-              height="48"
-              loading="lazy"
-              onerror="this.style.display='none';this.nextElementSibling.style.display='block'"
-            />
-            <span class="brand-fallback">{b.name}</span>
-          </div>
-        ))}
-      </div>
-    </div>
-  </section>
 
   <section>
     <div class="container">
@@ -175,59 +144,4 @@ const brands = [
     white-space: nowrap;
   }
 
-  /* Brands strip */
-  .brands-section {
-    padding: 2.5rem 0;
-    border-top: 1px solid var(--border);
-    border-bottom: 1px solid var(--border);
-    background: var(--bg-alt);
-  }
-  .brands-label {
-    text-align: center;
-    font-size: 0.75rem;
-    text-transform: uppercase;
-    letter-spacing: 0.14em;
-    color: var(--muted);
-    margin: 0 0 1.75rem;
-  }
-  .brands-strip {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.75rem;
-    flex-wrap: wrap;
-  }
-  .brand-logo {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 0.6rem 1.1rem;
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    background: var(--surface);
-    color: var(--muted);
-    transition: color 0.2s, border-color 0.2s, box-shadow 0.2s;
-  }
-  .brand-logo:hover {
-    color: var(--text);
-    border-color: var(--accent);
-    box-shadow: 0 0 16px rgba(179, 36, 36, 0.15);
-  }
-  .brand-logo img {
-    display: block;
-    width: auto;
-    height: 40px;
-    object-fit: contain;
-    filter: grayscale(1) brightness(1.8);
-    transition: filter 0.2s;
-  }
-  .brand-logo:hover img { filter: grayscale(0) brightness(1); }
-  .brand-fallback {
-    display: none;
-    font-size: 0.95rem;
-    font-weight: 700;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    color: inherit;
-  }
 </style>
