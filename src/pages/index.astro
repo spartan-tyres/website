@@ -10,14 +10,14 @@ const services = [
 ];
 
 const brands = [
-  { name: "Michelin",    style: "font-size:1.9rem;font-weight:900;letter-spacing:0.04em;" },
-  { name: "Continental", style: "font-size:1.05rem;font-weight:300;letter-spacing:0.22em;" },
-  { name: "Pirelli",     style: "font-size:1.8rem;font-weight:900;font-style:italic;letter-spacing:0.01em;" },
-  { name: "Bridgestone", style: "font-size:1.05rem;font-weight:700;letter-spacing:0.03em;" },
-  { name: "Goodyear",    style: "font-size:1.6rem;font-weight:800;letter-spacing:-0.01em;" },
-  { name: "Dunlop",      style: "font-size:1.7rem;font-weight:900;letter-spacing:0.07em;" },
-  { name: "Yokohama",    style: "font-size:1.0rem;font-weight:600;letter-spacing:0.16em;" },
-  { name: "Hankook",     style: "font-size:1.4rem;font-weight:800;letter-spacing:0.05em;" },
+  { name: "Michelin",    domain: "michelin.com" },
+  { name: "Continental", domain: "continental-tires.com" },
+  { name: "Pirelli",     domain: "pirelli.com" },
+  { name: "Bridgestone", domain: "bridgestone.com" },
+  { name: "Goodyear",    domain: "goodyear.com" },
+  { name: "Dunlop",      domain: "dunloptires.com" },
+  { name: "Yokohama",    domain: "yokohamatire.com" },
+  { name: "Hankook",     domain: "hankooktire.com" },
 ];
 ---
 
@@ -61,7 +61,15 @@ const brands = [
       <div class="brands-strip">
         {brands.map((b) => (
           <div class="brand-logo">
-            <span style={b.style}>{b.name}</span>
+            <img
+              src={`https://logo.clearbit.com/${b.domain}`}
+              alt={b.name}
+              width="120"
+              height="48"
+              loading="lazy"
+              onerror="this.style.display='none';this.nextElementSibling.style.display='block'"
+            />
+            <span class="brand-fallback">{b.name}</span>
           </div>
         ))}
       </div>
@@ -205,11 +213,21 @@ const brands = [
     border-color: var(--accent);
     box-shadow: 0 0 16px rgba(179, 36, 36, 0.15);
   }
-  .brand-logo span {
+  .brand-logo img {
     display: block;
-    line-height: 1;
-    color: inherit;
+    width: auto;
+    height: 40px;
+    object-fit: contain;
+    filter: grayscale(1) brightness(1.8);
+    transition: filter 0.2s;
+  }
+  .brand-logo:hover img { filter: grayscale(0) brightness(1); }
+  .brand-fallback {
+    display: none;
+    font-size: 0.95rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
     text-transform: uppercase;
-    white-space: nowrap;
+    color: inherit;
   }
 </style>
