@@ -1,32 +1,206 @@
 ---
 import Layout from "../layouts/Layout.astro";
+
+const base = import.meta.env.BASE_URL;
+
+const stats = [
+  { value: "10+",  label: "Years fitting tyres" },
+  { value: "24/7", label: "Available, any day" },
+  { value: "£0",   label: "Hidden fees, ever" },
+  { value: "30min",label: "Average turnaround" },
+];
+
+const promises = [
+  {
+    title: "We repair before we replace",
+    body: "If your tyre can be safely fixed to British Standard, we fix it. A repair saves you money and we'd rather earn your trust than a quick sale.",
+    icon: `<svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>`,
+  },
+  {
+    title: "Straight talking, no jargon",
+    body: "We'll tell you exactly what's wrong, what your options are, and what it'll cost before we touch anything. No surprises at the till.",
+    icon: `<svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>`,
+  },
+  {
+    title: "On the road fast",
+    body: "Most fits and repairs are done while you wait. Walk ins are always welcome; book ahead to guarantee your slot.",
+    icon: `<svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>`,
+  },
+];
 ---
 
 <Layout title="About | Spartan Tyres">
+
   <section class="hero" style="padding: 3.5rem 0 2.5rem;">
     <div class="container">
       <span class="eyebrow">Our story</span>
       <h1>Local, independent, straight talking.</h1>
-      <p>Spartan Tyres is a family run fitting centre built on the idea that tyre fitting shouldn't be a hassle or a rip off.</p>
+      <p>Spartan Tyres is a family run fitting centre built on the idea that getting a tyre sorted shouldn't be a hassle or a rip off.</p>
     </div>
   </section>
 
+  <div class="stats-bar">
+    <div class="container stats-inner">
+      {stats.map((s) => (
+        <div class="stat">
+          <span class="stat-value">{s.value}</span>
+          <span class="stat-label">{s.label}</span>
+        </div>
+      ))}
+    </div>
+  </div>
+
   <section>
-    <div class="container">
-      <div class="grid" style="grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));">
-        <div class="card">
-          <h3>Experience</h3>
-          <p>Over a decade of fitting tyres on everything from city hatchbacks to heavy work vans. We know what works and what doesn't.</p>
-        </div>
-        <div class="card">
-          <h3>Honesty</h3>
-          <p>If your tyre can be safely repaired, we'll repair it. We'll never push a sale you don't need.</p>
-        </div>
-        <div class="card">
-          <h3>Speed</h3>
-          <p>Most jobs turned around on the same visit. Walk ins welcome; booking guarantees your slot.</p>
-        </div>
+    <div class="container intro-grid">
+      <div class="intro-photo" aria-hidden="true">
+        <img src={`${base}img/logo.jpg`} alt="Spartan Tyres" width="480" height="480" />
+      </div>
+      <div class="intro-copy">
+        <h2>Family run, community focused</h2>
+        <p>Spartan Tyres was built from the ground up by someone who got fed up watching customers get overcharged at big chains for work they didn't need. Over a decade later, the mission is the same: give every driver a fair deal and get them back on the road safely.</p>
+        <p>We serve Staines upon Thames and the surrounding area including Ashford, Egham, Shepperton and Sunbury. We're not a franchise, not a call centre. When you contact us, you speak to the people who'll actually be fitting your tyres.</p>
+        <a class="btn" href={`${base}contact/`}>Get in touch</a>
       </div>
     </div>
   </section>
+
+  <section class="promise-section">
+    <div class="container">
+      <div class="section-head">
+        <h2>Our promise to you</h2>
+        <p>Three things we'll never compromise on.</p>
+      </div>
+      <div class="promise-grid">
+        {promises.map((p) => (
+          <div class="promise-card">
+            <div class="promise-icon" set:html={p.icon} />
+            <h3>{p.title}</h3>
+            <p>{p.body}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-section">
+    <div class="container cta-inner">
+      <div>
+        <h2>Ready to book?</h2>
+        <p>Walk ins welcome. Most jobs done in under 30 minutes.</p>
+      </div>
+      <div class="cta-buttons">
+        <a class="btn" href={`${base}contact/`}>Book a fitting</a>
+        <a
+          class="btn secondary whatsapp-cta"
+          href="https://wa.me/447511928899?text=Hi%2C%20I%27d%20like%20to%20book%20a%20tyre%20fitting"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/></svg>
+          WhatsApp us
+        </a>
+      </div>
+    </div>
+  </section>
+
 </Layout>
+
+<style>
+  .stats-bar {
+    background: var(--accent);
+    padding: 2rem 0;
+  }
+  .stats-inner {
+    display: flex;
+    justify-content: center;
+    gap: 0;
+    flex-wrap: wrap;
+  }
+  .stat {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0.75rem 2.5rem;
+    border-right: 1px solid rgba(255,255,255,0.2);
+  }
+  .stat:last-child { border-right: none; }
+  .stat-value {
+    font-size: clamp(1.8rem, 4vw, 2.5rem);
+    font-weight: 900;
+    color: #fff;
+    line-height: 1;
+    letter-spacing: -0.02em;
+  }
+  .stat-label {
+    font-size: 0.8rem;
+    color: rgba(255,255,255,0.75);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-top: 0.3rem;
+  }
+  @media (max-width: 600px) {
+    .stat { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.2); width: 50%; }
+    .stat:nth-child(odd) { border-right: 1px solid rgba(255,255,255,0.2); }
+    .stat:last-child, .stat:nth-last-child(2):nth-child(odd) { border-bottom: none; }
+  }
+
+  .intro-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 0.85fr) minmax(0, 1fr);
+    gap: 3.5rem;
+    align-items: center;
+  }
+  .intro-photo img {
+    width: 100%;
+    height: auto;
+    border-radius: 50%;
+    box-shadow: 0 0 60px rgba(179, 36, 36, 0.2);
+  }
+  .intro-copy p { font-size: 1.05rem; }
+  .intro-copy .btn { margin-top: 0.5rem; }
+  @media (max-width: 780px) {
+    .intro-grid { grid-template-columns: 1fr; }
+    .intro-photo { max-width: 220px; margin: 0 auto; }
+  }
+
+  .promise-section { background: var(--bg-alt); }
+  .promise-grid {
+    display: grid;
+    gap: 1.25rem;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  }
+  .promise-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.75rem;
+  }
+  .promise-icon {
+    color: var(--accent);
+    margin-bottom: 1rem;
+  }
+  .promise-card h3 { margin-bottom: 0.5rem; }
+
+  .cta-section {
+    background: var(--bg-alt);
+    border-top: 1px solid var(--border);
+  }
+  .cta-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+    flex-wrap: wrap;
+    padding-top: 3rem;
+    padding-bottom: 3rem;
+  }
+  .cta-inner h2 { margin-bottom: 0.25rem; }
+  .cta-inner p { margin: 0; }
+  .cta-buttons {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+    flex-shrink: 0;
+  }
+  .whatsapp-cta { gap: 0.5rem; }
+</style>
