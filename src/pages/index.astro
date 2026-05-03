@@ -125,9 +125,41 @@ const brands = [
       </div>
       <div class="grid">
         <div class="card"><h3>No nonsense pricing</h3><p>Fixed, transparent prices. No surprise add ons at the till.</p></div>
-        <div class="card"><h3>Same day fitting</h3><p>Walk in welcome. Most fits take 20 to 40 minutes.</p></div>
+        <div class="card"><h3>We come to you</h3><p>Mobile fitting at your home or workplace. Most jobs done in 20 to 40 minutes.</p></div>
         <div class="card"><h3>Trusted brands</h3><p>Michelin, Continental, Pirelli, Bridgestone and more in stock.</p></div>
       </div>
+    </div>
+  </section>
+
+  <section class="game-section">
+    <div class="container game-layout">
+
+      <div class="game-copy">
+        <span class="eyebrow">Exclusive offer</span>
+        <h2>Beat the game.<br />Save on your fitting.</h2>
+        <p>Score <strong>200+</strong> in Tyre Dodger and unlock 10% off your next fitting. The code appears the moment you hit the target.</p>
+
+        <div class="target-badge">
+          <span class="target-label">Target score</span>
+          <span class="target-value">200</span>
+        </div>
+
+        <div id="promo-box" class="promo-box" aria-live="polite" aria-atomic="true">
+          <p class="promo-unlock">You did it!</p>
+          <p class="promo-label">Your 10% discount code</p>
+          <div class="promo-row">
+            <span class="promo-code">DODGE10</span>
+            <button id="promo-copy" class="promo-copy-btn" type="button">Copy</button>
+          </div>
+          <p class="promo-note">Mention this code when you book. Valid on any service.</p>
+        </div>
+      </div>
+
+      <div class="game-canvas-wrap">
+        <canvas id="hgc"></canvas>
+        <p class="game-hint-sm">Arrow keys or touch to move &middot; Space to start</p>
+      </div>
+
     </div>
   </section>
 </Layout>
@@ -406,4 +438,371 @@ const brands = [
     color: var(--accent);
   }
   .services-footer { margin-top: 1.75rem; }
+
+  /* ── Game section ── */
+  .game-section {
+    background: var(--bg-alt);
+    border-top: 1px solid var(--border);
+    position: relative;
+    overflow: hidden;
+  }
+  .game-section::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse 60% 100% at 0% 50%, rgba(179,36,36,.1) 0%, transparent 65%);
+    pointer-events: none;
+  }
+  .game-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr);
+    gap: 3rem;
+    align-items: center;
+    position: relative;
+    z-index: 1;
+  }
+  .game-copy { display: flex; flex-direction: column; gap: 1rem; }
+  .game-copy h2 { margin-bottom: 0; }
+  .game-copy > p strong { color: var(--text); }
+
+  .target-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 0.6rem 1rem;
+    width: fit-content;
+  }
+  .target-label {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--muted);
+  }
+  .target-value {
+    font-size: 1.5rem;
+    font-weight: 900;
+    color: var(--accent);
+    line-height: 1;
+  }
+
+  /* Promo box — hidden until unlocked */
+  .promo-box {
+    background: var(--surface);
+    border: 2px solid var(--accent);
+    border-radius: var(--radius);
+    padding: 1.25rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    opacity: 0;
+    transform: translateY(12px);
+    pointer-events: none;
+    transition: opacity 0.4s ease, transform 0.4s ease;
+  }
+  .promo-box.revealed {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+  }
+  .promo-unlock {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin: 0;
+  }
+  .promo-label { font-size: 0.8rem; color: var(--muted); margin: 0; }
+  .promo-row {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin: 0.25rem 0;
+  }
+  .promo-code {
+    font-size: 1.8rem;
+    font-weight: 900;
+    letter-spacing: 0.12em;
+    color: var(--text);
+    line-height: 1;
+  }
+  .promo-copy-btn {
+    padding: 0.4rem 0.9rem;
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    border-radius: var(--radius);
+    font-size: 0.8rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.15s;
+    font-family: inherit;
+  }
+  .promo-copy-btn:hover { background: var(--accent-hover); }
+  .promo-note { font-size: 0.78rem; color: var(--muted); margin: 0; }
+
+  /* Canvas wrap */
+  .game-canvas-wrap { display: flex; flex-direction: column; gap: 0.5rem; }
+  #hgc {
+    display: block;
+    width: 100%;
+    aspect-ratio: 16 / 7;
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+    cursor: crosshair;
+    touch-action: none;
+  }
+  .game-hint-sm {
+    font-size: 0.75rem;
+    color: var(--muted);
+    text-align: center;
+    margin: 0;
+  }
+
+  @media (max-width: 860px) {
+    .game-layout {
+      grid-template-columns: 1fr;
+    }
+    .game-canvas-wrap { order: -1; }
+  }
 </style>
+
+<script is:inline>
+(function () {
+  const canvas = document.getElementById('hgc');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+
+  const WIN_DISPLAY = 200; // score shown to player
+  const WIN_TICKS   = WIN_DISPLAY * 10;
+
+  function sync() {
+    const r = canvas.getBoundingClientRect();
+    canvas.width  = Math.round(r.width);
+    canvas.height = Math.round(r.height);
+  }
+  sync();
+  window.addEventListener('resize', sync);
+
+  const P = {
+    bg:'#151518', road:'#1c1c21', edge:'#2f2f35', dash:'#38383f',
+    accent:'#b32424', text:'#efe6da', muted:'#8e857a',
+    rubber:'#252528', rim:'#999', silver:'#c8c8c8',
+  };
+
+  let phase = 'start', score = 0, best = 0, lives = 3;
+  let spd = 0, gTick = 0, aTick = 0, dashX = 0, inv = 0;
+  let won = false;
+
+  function road() {
+    const top = Math.round(canvas.height * 0.08);
+    const bot = Math.round(canvas.height * 0.92);
+    return { top, bot, h: bot - top };
+  }
+
+  const pl = {
+    x:0, y:0, r:0, vy:0, angle:0,
+    reset() {
+      this.r = Math.round(canvas.height * 0.1);
+      this.x = Math.round(canvas.width  * 0.14);
+      this.y = Math.round(canvas.height * 0.5);
+      this.vy = 0; this.angle = 0;
+    },
+    update() {
+      this.y += this.vy;
+      const rd = road();
+      this.y = Math.max(rd.top + this.r, Math.min(rd.bot - this.r, this.y));
+      this.angle += spd * 0.042;
+    },
+    draw() {
+      if (inv > 0 && Math.floor(inv / 5) % 2 === 1) return;
+      ctx.save(); ctx.translate(this.x, this.y);
+      ctx.beginPath(); ctx.arc(0,0,this.r,0,Math.PI*2);
+      ctx.fillStyle = P.rubber; ctx.fill();
+      ctx.beginPath(); ctx.arc(0,0,this.r,0,Math.PI*2);
+      ctx.strokeStyle = '#3a3a3d'; ctx.lineWidth = this.r*0.18; ctx.stroke();
+      ctx.save(); ctx.rotate(this.angle);
+      const ri = this.r*0.58;
+      ctx.beginPath(); ctx.arc(0,0,ri,0,Math.PI*2);
+      ctx.fillStyle = P.rim; ctx.fill();
+      ctx.strokeStyle='#bbb'; ctx.lineWidth=this.r*0.08;
+      for(let i=0;i<5;i++){
+        const a=(Math.PI*2/5)*i;
+        ctx.beginPath();
+        ctx.moveTo(Math.cos(a)*this.r*0.18,Math.sin(a)*this.r*0.18);
+        ctx.lineTo(Math.cos(a)*ri*0.95,   Math.sin(a)*ri*0.95);
+        ctx.stroke();
+      }
+      ctx.beginPath(); ctx.arc(0,0,this.r*0.18,0,Math.PI*2);
+      ctx.fillStyle=P.accent; ctx.fill();
+      ctx.restore(); ctx.restore();
+    }
+  };
+
+  let obs=[], spawnCD=0;
+
+  function spawn() {
+    const rd=road(), lanes=3, lane=Math.floor(Math.random()*lanes);
+    const y = rd.top+(rd.h/lanes)*(lane+0.5);
+    const type = Math.random()<0.42?'nail':'hole';
+    obs.push({ type, x:canvas.width+60, y,
+      w:type==='hole'?canvas.height*0.15:canvas.height*0.026,
+      h:type==='hole'?canvas.height*0.09 :canvas.height*0.075 });
+  }
+
+  function drawNail(o) {
+    ctx.save(); ctx.translate(o.x,o.y); ctx.rotate(0.35);
+    const hw=o.w*0.5, hh=o.h*0.5;
+    ctx.fillStyle=P.silver;
+    ctx.fillRect(-hw,-hh*0.6,hw*2,hh*1.1);
+    ctx.beginPath(); ctx.moveTo(-hw*1.2,hh*0.5); ctx.lineTo(0,hh*1.6); ctx.lineTo(hw*1.2,hh*0.5);
+    ctx.fillStyle='#aaa'; ctx.fill();
+    ctx.beginPath(); ctx.ellipse(0,-hh*0.7,hw*2.2,hh*0.45,0,0,Math.PI*2);
+    ctx.fillStyle='#b0b0b0'; ctx.fill();
+    ctx.restore();
+  }
+
+  function drawHole(o) {
+    ctx.save(); ctx.translate(o.x,o.y);
+    const rx=o.w*0.5, ry=o.h*0.5;
+    ctx.beginPath(); ctx.ellipse(rx*0.18,ry*0.22,rx,ry,0,0,Math.PI*2);
+    ctx.fillStyle='rgba(0,0,0,0.4)'; ctx.fill();
+    ctx.beginPath(); ctx.ellipse(0,0,rx,ry,0,0,Math.PI*2);
+    ctx.fillStyle='#07070a'; ctx.fill();
+    ctx.beginPath(); ctx.ellipse(-rx*0.12,-ry*0.12,rx*0.65,ry*0.62,0,0,Math.PI*2);
+    ctx.fillStyle='#030305'; ctx.fill();
+    ctx.beginPath(); ctx.ellipse(0,0,rx,ry,0,0,Math.PI*2);
+    ctx.strokeStyle='#1e1e24'; ctx.lineWidth=3; ctx.stroke();
+    ctx.restore();
+  }
+
+  function hit(o) {
+    const pr=pl.r*0.70;
+    const ox=o.type==='nail'?o.w*0.4:o.w*0.42;
+    const oy=o.type==='nail'?o.h*0.55:o.h*0.42;
+    return Math.abs(pl.x-o.x)<pr+ox && Math.abs(pl.y-o.y)<pr+oy;
+  }
+
+  const keys={};
+  window.addEventListener('keydown',e=>{
+    keys[e.key]=true;
+    if([' ','ArrowUp','ArrowDown','w','s'].includes(e.key)) e.preventDefault();
+    if((e.key===' '||e.key==='Enter')&&phase!=='playing') begin();
+  });
+  window.addEventListener('keyup',e=>{ delete keys[e.key]; });
+
+  let touchY=null;
+  canvas.addEventListener('touchstart',e=>{ e.preventDefault(); touchY=e.touches[0].clientY; if(phase!=='playing') begin(); },{passive:false});
+  canvas.addEventListener('touchmove',e=>{ e.preventDefault(); if(phase!=='playing'||touchY===null) return; pl.vy=(e.touches[0].clientY-touchY)*0.3; touchY=e.touches[0].clientY; },{passive:false});
+  canvas.addEventListener('touchend',e=>{ e.preventDefault(); pl.vy*=0.2; touchY=null; },{passive:false});
+  canvas.addEventListener('click',()=>{ if(phase!=='playing') begin(); });
+
+  function revealPromo() {
+    if(won) return;
+    won=true;
+    const box=document.getElementById('promo-box');
+    if(box) box.classList.add('revealed');
+    box.scrollIntoView({ behavior:'smooth', block:'nearest' });
+  }
+
+  document.getElementById('promo-copy')?.addEventListener('click',function(){
+    navigator.clipboard.writeText('DODGE10').then(()=>{
+      this.textContent='Copied!';
+      setTimeout(()=>{ this.textContent='Copy'; },2000);
+    }).catch(()=>{
+      this.textContent='DODGE10';
+    });
+  });
+
+  function begin() {
+    phase='playing'; score=0; lives=3; spd=4; gTick=0; inv=0;
+    obs=[]; spawnCD=70; won=false; pl.reset();
+  }
+
+  function update() {
+    if(phase!=='playing') return;
+    gTick++; score++;
+    spd=4+Math.min(gTick/350,5);
+    dashX=(dashX+spd)%44;
+    spawnCD--;
+    if(spawnCD<=0){ spawn(); spawnCD=Math.max(36,70-Math.floor(gTick/180)*4); }
+    for(const o of obs) o.x-=spd;
+    obs=obs.filter(o=>o.x>-120);
+    const PSPD=Math.round(canvas.height*0.014);
+    if(keys['ArrowUp']||keys['w'])      pl.vy=-PSPD;
+    else if(keys['ArrowDown']||keys['s']) pl.vy=PSPD;
+    else if(touchY===null)               pl.vy*=0.72;
+    pl.update();
+    if(score>=WIN_TICKS && !won) revealPromo();
+    if(inv>0){ inv--; } else {
+      for(const o of obs){ if(hit(o)){ lives--; inv=90; o.x=-300; if(lives<=0){ phase='dead'; best=Math.max(best,score); } break; } }
+    }
+  }
+
+  function drawRoad() {
+    const rd=road();
+    ctx.fillStyle=P.road; ctx.fillRect(0,rd.top,canvas.width,rd.h);
+    ctx.fillStyle=P.edge; ctx.fillRect(0,rd.top,canvas.width,4); ctx.fillRect(0,rd.bot-4,canvas.width,4);
+    ctx.save(); ctx.setLineDash([28,16]); ctx.lineDashOffset=-dashX;
+    ctx.beginPath(); ctx.moveTo(0,rd.top+rd.h/2); ctx.lineTo(canvas.width,rd.top+rd.h/2);
+    ctx.strokeStyle=P.dash; ctx.lineWidth=3; ctx.stroke(); ctx.restore();
+  }
+
+  function drawHUD() {
+    ctx.fillStyle=P.text; ctx.font=`700 ${Math.round(canvas.height*0.055)}px system-ui`;
+    ctx.textAlign='left';
+    const d=Math.floor(score/10);
+    ctx.fillText('Score: '+d, 14, Math.round(canvas.height*0.07));
+    if(score<WIN_TICKS){
+      ctx.fillStyle=P.muted; ctx.font=`${Math.round(canvas.height*0.042)}px system-ui`;
+      ctx.fillText('Target: '+WIN_DISPLAY, 14, Math.round(canvas.height*0.13));
+    }
+    const lr=Math.round(canvas.height*0.04);
+    for(let i=0;i<3;i++){
+      const lx=canvas.width-14-lr-i*(lr*2+8), ly=Math.round(canvas.height*0.065);
+      ctx.globalAlpha=i<lives?1:0.18;
+      ctx.beginPath(); ctx.arc(lx,ly,lr,0,Math.PI*2); ctx.fillStyle=P.rubber; ctx.fill();
+      ctx.beginPath(); ctx.arc(lx,ly,lr*0.52,0,Math.PI*2); ctx.fillStyle=P.accent; ctx.fill();
+      ctx.globalAlpha=1;
+    }
+  }
+
+  function pill(x,y,w,h,r){
+    ctx.beginPath(); ctx.moveTo(x+r,y);
+    ctx.arcTo(x+w,y,x+w,y+h,r); ctx.arcTo(x+w,y+h,x,y+h,r);
+    ctx.arcTo(x,y+h,x,y,r);     ctx.arcTo(x,y,x+w,y,r);
+    ctx.closePath();
+  }
+
+  function overlay(title,l1,l2,btn) {
+    ctx.fillStyle='rgba(21,21,24,0.88)'; ctx.fillRect(0,0,canvas.width,canvas.height);
+    const cx=canvas.width/2, cy=canvas.height/2, fs=canvas.height*0.065;
+    ctx.textAlign='center';
+    ctx.fillStyle=P.accent; ctx.font=`900 ${Math.round(fs*1.1)}px system-ui`; ctx.fillText(title,cx,cy-fs*1.6);
+    ctx.fillStyle=P.text;   ctx.font=`${Math.round(fs*0.6)}px system-ui`;    ctx.fillText(l1,cx,cy-fs*0.55);
+    if(l2){ ctx.fillStyle=P.muted; ctx.font=`${Math.round(fs*0.52)}px system-ui`; ctx.fillText(l2,cx,cy-fs*0.08); }
+    const bw=Math.round(canvas.width*0.45), bh=Math.round(canvas.height*0.14);
+    const bx=cx-bw/2, by=cy+fs*0.45;
+    ctx.globalAlpha=0.78+Math.sin(aTick*0.055)*0.22;
+    ctx.fillStyle=P.accent; pill(bx,by,bw,bh,6); ctx.fill(); ctx.globalAlpha=1;
+    ctx.fillStyle='#fff'; ctx.font=`700 ${Math.round(fs*0.5)}px system-ui`; ctx.fillText(btn,cx,by+bh*0.64);
+    ctx.textAlign='left';
+  }
+
+  function loop() {
+    aTick++; update();
+    ctx.fillStyle=P.bg; ctx.fillRect(0,0,canvas.width,canvas.height);
+    drawRoad();
+    for(const o of obs) o.type==='nail'?drawNail(o):drawHole(o);
+    pl.draw();
+    if(phase==='playing') drawHUD();
+    if(phase==='start')   overlay('TYRE DODGER','Dodge nails and potholes!','Score 200+ to unlock 10% off','TAP / PRESS SPACE TO START');
+    if(phase==='dead')    overlay('PUNCTURED!','Score: '+Math.floor(score/10),'Best: '+Math.floor(best/10),'PLAY AGAIN');
+    requestAnimationFrame(loop);
+  }
+
+  pl.reset(); loop();
+})();
+</script>
