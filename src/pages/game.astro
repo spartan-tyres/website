@@ -1,0 +1,490 @@
+---
+import Layout from "../layouts/Layout.astro";
+
+const base = import.meta.env.BASE_URL;
+---
+
+<Layout
+  title="Tyre Dodger | Spartan Tyres"
+  description="Dodge potholes and nails in Tyre Dodger — a free mini game from Spartan Tyres."
+>
+  <section class="hero" style="padding: 2.5rem 0 2rem;">
+    <div class="container">
+      <span class="eyebrow">Mini game</span>
+      <h1>Tyre Dodger</h1>
+      <p>How far can you go without a puncture? Dodge the nails and potholes.</p>
+    </div>
+  </section>
+
+  <section style="padding: 0 0 4rem;">
+    <div class="container">
+      <div class="game-wrap">
+        <canvas id="gc"></canvas>
+      </div>
+      <p class="game-hint">Arrow keys or W / S to move &middot; Space / Enter to start &middot; Touch supported</p>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .game-wrap {
+    width: 100%;
+    max-width: 860px;
+    margin: 0 auto;
+    border-radius: var(--radius);
+    overflow: hidden;
+    border: 1px solid var(--border);
+    box-shadow: 0 0 60px rgba(179, 36, 36, 0.12);
+    background: #151518;
+  }
+  #gc {
+    display: block;
+    width: 100%;
+    aspect-ratio: 16 / 7;
+    cursor: crosshair;
+    touch-action: none;
+  }
+  .game-hint {
+    text-align: center;
+    font-size: 0.8rem;
+    color: var(--muted);
+    margin-top: 1rem;
+  }
+</style>
+
+<script is:inline>
+(function () {
+  /* ── Setup ───────────────────────────────────────────────────────── */
+  const canvas = document.getElementById('gc');
+  const ctx    = canvas.getContext('2d');
+
+  function sync() {
+    const r = canvas.getBoundingClientRect();
+    canvas.width  = Math.round(r.width);
+    canvas.height = Math.round(r.height);
+  }
+  sync();
+  window.addEventListener('resize', sync);
+
+  /* ── Palette ─────────────────────────────────────────────────────── */
+  const P = {
+    bg:     '#151518',
+    road:   '#1c1c21',
+    edge:   '#2f2f35',
+    dash:   '#38383f',
+    accent: '#b32424',
+    text:   '#efe6da',
+    muted:  '#8e857a',
+    rubber: '#252528',
+    rim:    '#999',
+    silver: '#c8c8c8',
+  };
+
+  /* ── Game state ──────────────────────────────────────────────────── */
+  let phase = 'start';   // 'start' | 'playing' | 'dead'
+  let score = 0;
+  let best  = 0;
+  let lives = 3;
+  let spd   = 0;         // road scroll speed (px/frame)
+  let gTick = 0;         // gameplay ticks (resets each game)
+  let aTick = 0;         // animation ticks (never resets)
+  let dashX = 0;
+  let invincible = 0;    // frames of invincibility after a hit
+
+  /* ── Road helpers ────────────────────────────────────────────────── */
+  function road() {
+    const top = Math.round(canvas.height * 0.08);
+    const bot = Math.round(canvas.height * 0.92);
+    return { top, bot, h: bot - top };
+  }
+
+  /* ── Player ──────────────────────────────────────────────────────── */
+  const player = {
+    x: 0, y: 0, r: 0,
+    vy: 0,
+    angle: 0,
+
+    reset() {
+      this.r  = Math.round(canvas.height * 0.1);
+      this.x  = Math.round(canvas.width  * 0.14);
+      this.y  = Math.round(canvas.height * 0.5);
+      this.vy = 0;
+      this.angle = 0;
+    },
+
+    update() {
+      this.y += this.vy;
+      const rd = road();
+      this.y = Math.max(rd.top + this.r, Math.min(rd.bot - this.r, this.y));
+      this.angle += spd * 0.042;
+    },
+
+    draw() {
+      if (invincible > 0 && Math.floor(invincible / 5) % 2 === 1) return;
+      const { x, y, r } = this;
+
+      ctx.save();
+      ctx.translate(x, y);
+
+      /* rubber */
+      ctx.beginPath();
+      ctx.arc(0, 0, r, 0, Math.PI * 2);
+      ctx.fillStyle = P.rubber;
+      ctx.fill();
+      ctx.beginPath();
+      ctx.arc(0, 0, r, 0, Math.PI * 2);
+      ctx.strokeStyle = '#3a3a3d';
+      ctx.lineWidth = r * 0.18;
+      ctx.stroke();
+
+      /* spinning rim + spokes */
+      ctx.save();
+      ctx.rotate(this.angle);
+      const ri = r * 0.58;
+      ctx.beginPath();
+      ctx.arc(0, 0, ri, 0, Math.PI * 2);
+      ctx.fillStyle = P.rim;
+      ctx.fill();
+      ctx.strokeStyle = '#bbb';
+      ctx.lineWidth = r * 0.08;
+      for (let i = 0; i < 5; i++) {
+        const a = (Math.PI * 2 / 5) * i;
+        ctx.beginPath();
+        ctx.moveTo(Math.cos(a) * r * 0.18, Math.sin(a) * r * 0.18);
+        ctx.lineTo(Math.cos(a) * ri * 0.95, Math.sin(a) * ri * 0.95);
+        ctx.stroke();
+      }
+      /* hub cap */
+      ctx.beginPath();
+      ctx.arc(0, 0, r * 0.18, 0, Math.PI * 2);
+      ctx.fillStyle = P.accent;
+      ctx.fill();
+      ctx.restore();
+
+      ctx.restore();
+    }
+  };
+
+  /* ── Obstacles ───────────────────────────────────────────────────── */
+  let obs      = [];
+  let spawnCD  = 0;
+
+  function spawn() {
+    const rd    = road();
+    const lanes = 3;
+    const lane  = Math.floor(Math.random() * lanes);
+    const y     = rd.top + (rd.h / lanes) * (lane + 0.5);
+    const type  = Math.random() < 0.42 ? 'nail' : 'hole';
+
+    obs.push({
+      type,
+      x: canvas.width + 60,
+      y,
+      w: type === 'hole' ? canvas.height * 0.15 : canvas.height * 0.026,
+      h: type === 'hole' ? canvas.height * 0.09  : canvas.height * 0.075,
+    });
+  }
+
+  function drawNail(o) {
+    ctx.save();
+    ctx.translate(o.x, o.y);
+    ctx.rotate(0.35);
+
+    const hw = o.w * 0.5;
+    const hh = o.h * 0.5;
+
+    /* shaft */
+    ctx.fillStyle = P.silver;
+    ctx.beginPath();
+    ctx.rect(-hw, -hh * 0.6, hw * 2, hh * 1.1);
+    ctx.fill();
+
+    /* point */
+    ctx.beginPath();
+    ctx.moveTo(-hw * 1.2, hh * 0.5);
+    ctx.lineTo(0, hh * 1.6);
+    ctx.lineTo(hw * 1.2, hh * 0.5);
+    ctx.fillStyle = '#aaa';
+    ctx.fill();
+
+    /* head */
+    ctx.beginPath();
+    ctx.ellipse(0, -hh * 0.7, hw * 2.2, hh * 0.45, 0, 0, Math.PI * 2);
+    ctx.fillStyle = '#b0b0b0';
+    ctx.fill();
+
+    ctx.restore();
+  }
+
+  function drawHole(o) {
+    ctx.save();
+    ctx.translate(o.x, o.y);
+
+    const rx = o.w * 0.5;
+    const ry = o.h * 0.5;
+
+    /* drop shadow */
+    ctx.beginPath();
+    ctx.ellipse(rx * 0.18, ry * 0.22, rx, ry, 0, 0, Math.PI * 2);
+    ctx.fillStyle = 'rgba(0,0,0,0.4)';
+    ctx.fill();
+
+    /* hole */
+    ctx.beginPath();
+    ctx.ellipse(0, 0, rx, ry, 0, 0, Math.PI * 2);
+    ctx.fillStyle = '#07070a';
+    ctx.fill();
+
+    /* inner depth */
+    ctx.beginPath();
+    ctx.ellipse(-rx * 0.12, -ry * 0.12, rx * 0.65, ry * 0.62, 0, 0, Math.PI * 2);
+    ctx.fillStyle = '#030305';
+    ctx.fill();
+
+    /* cracked rim */
+    ctx.beginPath();
+    ctx.ellipse(0, 0, rx, ry, 0, 0, Math.PI * 2);
+    ctx.strokeStyle = '#1e1e24';
+    ctx.lineWidth = 3;
+    ctx.stroke();
+
+    ctx.restore();
+  }
+
+  function hitTest(o) {
+    const pr = player.r * 0.70;
+    const ox = o.type === 'nail' ? o.w * 0.4  : o.w * 0.42;
+    const oy = o.type === 'nail' ? o.h * 0.55 : o.h * 0.42;
+    return Math.abs(player.x - o.x) < pr + ox &&
+           Math.abs(player.y - o.y) < pr + oy;
+  }
+
+  /* ── Controls ────────────────────────────────────────────────────── */
+  const keys = {};
+  window.addEventListener('keydown', e => {
+    keys[e.key] = true;
+    if (['ArrowUp','ArrowDown','w','s',' '].includes(e.key)) e.preventDefault();
+    if ((e.key === ' ' || e.key === 'Enter') && phase !== 'playing') begin();
+  });
+  window.addEventListener('keyup', e => { delete keys[e.key]; });
+
+  let touchY = null;
+  canvas.addEventListener('touchstart', e => {
+    e.preventDefault();
+    touchY = e.touches[0].clientY;
+    if (phase !== 'playing') begin();
+  }, { passive: false });
+  canvas.addEventListener('touchmove', e => {
+    e.preventDefault();
+    if (phase !== 'playing' || touchY === null) return;
+    const dy = e.touches[0].clientY - touchY;
+    player.vy = dy * 0.3;
+    touchY = e.touches[0].clientY;
+  }, { passive: false });
+  canvas.addEventListener('touchend', e => {
+    e.preventDefault();
+    player.vy *= 0.2;
+    touchY = null;
+  }, { passive: false });
+
+  canvas.addEventListener('click', () => { if (phase !== 'playing') begin(); });
+
+  /* ── Game control ────────────────────────────────────────────────── */
+  function begin() {
+    phase      = 'playing';
+    score      = 0;
+    lives      = 3;
+    spd        = 4;
+    gTick      = 0;
+    invincible = 0;
+    obs        = [];
+    spawnCD    = 70;
+    player.reset();
+  }
+
+  /* ── Update ──────────────────────────────────────────────────────── */
+  function update() {
+    if (phase !== 'playing') return;
+
+    gTick++;
+    score++;
+    spd = 4 + Math.min(gTick / 350, 5);        // ramp 4 → 9
+    dashX = (dashX + spd) % 44;
+
+    /* spawn */
+    spawnCD--;
+    if (spawnCD <= 0) {
+      spawn();
+      spawnCD = Math.max(36, 70 - Math.floor(gTick / 180) * 4);
+    }
+
+    /* move & cull obstacles */
+    for (const o of obs) o.x -= spd;
+    obs = obs.filter(o => o.x > -120);
+
+    /* player input */
+    const PSPD = Math.round(canvas.height * 0.014);
+    if      (keys['ArrowUp']   || keys['w']) player.vy = -PSPD;
+    else if (keys['ArrowDown'] || keys['s']) player.vy =  PSPD;
+    else if (touchY === null)                player.vy *= 0.72;
+    player.update();
+
+    /* collision */
+    if (invincible > 0) {
+      invincible--;
+    } else {
+      for (const o of obs) {
+        if (hitTest(o)) {
+          lives--;
+          invincible = 90;
+          o.x = -300;
+          if (lives <= 0) {
+            phase = 'dead';
+            best  = Math.max(best, score);
+          }
+          break;
+        }
+      }
+    }
+  }
+
+  /* ── Draw helpers ────────────────────────────────────────────────── */
+  function drawRoad() {
+    const rd = road();
+
+    ctx.fillStyle = P.road;
+    ctx.fillRect(0, rd.top, canvas.width, rd.h);
+
+    ctx.fillStyle = P.edge;
+    ctx.fillRect(0, rd.top,     canvas.width, 4);
+    ctx.fillRect(0, rd.bot - 4, canvas.width, 4);
+
+    /* animated centre dashes */
+    ctx.save();
+    ctx.setLineDash([28, 16]);
+    ctx.lineDashOffset = -dashX;
+    ctx.beginPath();
+    ctx.moveTo(0, rd.top + rd.h / 2);
+    ctx.lineTo(canvas.width, rd.top + rd.h / 2);
+    ctx.strokeStyle = P.dash;
+    ctx.lineWidth = 3;
+    ctx.stroke();
+    ctx.restore();
+  }
+
+  function drawHUD() {
+    /* score */
+    ctx.fillStyle = P.text;
+    ctx.font = `700 ${Math.round(canvas.height * 0.055)}px system-ui`;
+    ctx.textAlign = 'left';
+    ctx.fillText('Score: ' + Math.floor(score / 10), 14, Math.round(canvas.height * 0.06));
+
+    /* lives as mini tyres */
+    const lr = Math.round(canvas.height * 0.04);
+    for (let i = 0; i < 3; i++) {
+      const lx = canvas.width - 14 - lr - i * (lr * 2 + 8);
+      const ly = Math.round(canvas.height * 0.055);
+      ctx.globalAlpha = i < lives ? 1 : 0.18;
+      ctx.beginPath();
+      ctx.arc(lx, ly, lr, 0, Math.PI * 2);
+      ctx.fillStyle = P.rubber;
+      ctx.fill();
+      ctx.beginPath();
+      ctx.arc(lx, ly, lr * 0.52, 0, Math.PI * 2);
+      ctx.fillStyle = P.accent;
+      ctx.fill();
+      ctx.globalAlpha = 1;
+    }
+  }
+
+  function pill(x, y, w, h, r) {
+    ctx.beginPath();
+    ctx.moveTo(x + r, y);
+    ctx.arcTo(x + w, y,     x + w, y + h, r);
+    ctx.arcTo(x + w, y + h, x,     y + h, r);
+    ctx.arcTo(x,     y + h, x,     y,     r);
+    ctx.arcTo(x,     y,     x + w, y,     r);
+    ctx.closePath();
+  }
+
+  function drawOverlay(title, line1, line2, btn) {
+    ctx.fillStyle = 'rgba(21,21,24,0.88)';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    const cx = canvas.width  / 2;
+    const cy = canvas.height / 2;
+    const fs = canvas.height * 0.065;
+
+    ctx.textAlign = 'center';
+
+    ctx.fillStyle = P.accent;
+    ctx.font = `900 ${Math.round(fs * 1.1)}px system-ui`;
+    ctx.fillText(title, cx, cy - fs * 1.6);
+
+    ctx.fillStyle = P.text;
+    ctx.font = `${Math.round(fs * 0.6)}px system-ui`;
+    ctx.fillText(line1, cx, cy - fs * 0.55);
+
+    if (line2) {
+      ctx.fillStyle = P.muted;
+      ctx.font = `${Math.round(fs * 0.52)}px system-ui`;
+      ctx.fillText(line2, cx, cy - fs * 0.1);
+    }
+
+    /* pulsing button */
+    const bw = Math.round(canvas.width * 0.32);
+    const bh = Math.round(canvas.height * 0.13);
+    const bx = cx - bw / 2;
+    const by = cy + fs * 0.5;
+    const pulse = 0.78 + Math.sin(aTick * 0.055) * 0.22;
+    ctx.globalAlpha = pulse;
+    ctx.fillStyle = P.accent;
+    pill(bx, by, bw, bh, 6);
+    ctx.fill();
+    ctx.globalAlpha = 1;
+
+    ctx.fillStyle = '#fff';
+    ctx.font = `700 ${Math.round(fs * 0.52)}px system-ui`;
+    ctx.fillText(btn, cx, by + bh * 0.62);
+
+    ctx.textAlign = 'left';
+  }
+
+  /* ── Main loop ───────────────────────────────────────────────────── */
+  function loop() {
+    aTick++;
+    update();
+
+    ctx.fillStyle = P.bg;
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    drawRoad();
+    for (const o of obs) o.type === 'nail' ? drawNail(o) : drawHole(o);
+    player.draw();
+    if (phase === 'playing') drawHUD();
+
+    if (phase === 'start') {
+      drawOverlay(
+        'TYRE DODGER',
+        'Dodge the nails and potholes!',
+        '↑ ↓ keys or swipe to move',
+        'TAP / PRESS SPACE TO START'
+      );
+    }
+
+    if (phase === 'dead') {
+      drawOverlay(
+        'PUNCTURED!',
+        'Score: ' + Math.floor(score / 10),
+        'Best:  ' + Math.floor(best  / 10),
+        'PLAY AGAIN'
+      );
+    }
+
+    requestAnimationFrame(loop);
+  }
+
+  player.reset();
+  loop();
+})();
+</script>
