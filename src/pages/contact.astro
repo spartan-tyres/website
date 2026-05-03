@@ -18,6 +18,10 @@ const WEB3FORMS_ACCESS_KEY = "03cd71bd-2eb2-41df-80a4-db4c00204b2c";
       <div style="display: grid; gap: 3rem; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);" class="contact-grid">
         <div>
           <h2>Send a message</h2>
+          <div class="response-badge">
+            <span class="response-dot" aria-hidden="true"></span>
+            We typically reply within 15 minutes
+          </div>
           <a
             href="https://wa.me/447511928899?text=Hi%2C%20I%27d%20like%20to%20book%20a%20tyre%20fitting"
             class="whatsapp-inline"
@@ -97,6 +101,32 @@ const WEB3FORMS_ACCESS_KEY = "03cd71bd-2eb2-41df-80a4-db4c00204b2c";
 <style>
   @media (max-width: 780px) {
     .contact-grid { grid-template-columns: 1fr !important; gap: 2rem !important; }
+  }
+
+  .response-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: rgba(37, 211, 102, 0.1);
+    border: 1px solid rgba(37, 211, 102, 0.3);
+    color: #25d366;
+    font-size: 0.85rem;
+    font-weight: 600;
+    padding: 0.45rem 0.9rem;
+    border-radius: 50px;
+    margin-bottom: 1.25rem;
+  }
+  .response-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #25d366;
+    flex-shrink: 0;
+    animation: resp-pulse 1.8s ease-in-out infinite;
+  }
+  @keyframes resp-pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50%       { opacity: 0.4; transform: scale(1.4); }
   }
 
   .whatsapp-inline {
