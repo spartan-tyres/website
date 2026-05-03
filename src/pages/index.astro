@@ -72,7 +72,7 @@ const brands = [
     </span>
   </a>
 
-  <section class="brands-section">
+  <section class="brands-section colour-teal">
     <div class="container">
       <p class="brands-label">Brands we stock</p>
       <div class="brands-strip">
@@ -93,7 +93,7 @@ const brands = [
     </div>
   </section>
 
-  <section>
+  <section class="colour-orange">
     <div class="container">
       <div class="section-head">
         <h2>What we do</h2>
@@ -118,7 +118,7 @@ const brands = [
     </div>
   </section>
 
-  <section>
+  <section class="colour-purple">
     <div class="container">
       <div class="section-head">
         <h2>Why Spartan?</h2>
@@ -133,14 +133,12 @@ const brands = [
 </Layout>
 
 <style>
-  /* ── Colourful hero background ── */
+  /* ── Hero ── */
   .hero {
     position: relative;
     overflow: hidden;
     background: #0e0e12;
   }
-
-  /* Animated colour orbs */
   .hero::before,
   .hero::after {
     content: '';
@@ -150,90 +148,97 @@ const brands = [
     pointer-events: none;
     z-index: 0;
   }
-
-  /* Big red/orange orb — top right */
   .hero::before {
-    width: 700px;
-    height: 700px;
-    top: -200px;
-    right: -100px;
-    background: radial-gradient(circle,
-      rgba(220, 50, 30, 0.75) 0%,
-      rgba(255, 120, 20, 0.45) 45%,
-      transparent 70%
-    );
-    animation: orb-drift-a 8s ease-in-out infinite alternate;
+    width: 700px; height: 700px;
+    top: -200px; right: -100px;
+    background: radial-gradient(circle, rgba(220,50,30,.75) 0%, rgba(255,120,20,.45) 45%, transparent 70%);
+    animation: orb-a 8s ease-in-out infinite alternate;
   }
-
-  /* Purple/violet orb — top left */
   .hero::after {
-    width: 500px;
-    height: 500px;
-    top: -100px;
-    left: -80px;
-    background: radial-gradient(circle,
-      rgba(120, 40, 200, 0.55) 0%,
-      rgba(60, 20, 140, 0.3) 50%,
-      transparent 70%
-    );
-    animation: orb-drift-b 10s ease-in-out infinite alternate;
+    width: 500px; height: 500px;
+    top: -100px; left: -80px;
+    background: radial-gradient(circle, rgba(120,40,200,.55) 0%, rgba(60,20,140,.3) 50%, transparent 70%);
+    animation: orb-b 10s ease-in-out infinite alternate;
   }
-
-  /* Amber/gold orb — bottom left */
   .hero-bg-orb {
     position: absolute;
-    bottom: -120px;
-    left: 10%;
-    width: 460px;
-    height: 460px;
+    bottom: -120px; left: 10%;
+    width: 460px; height: 460px;
     border-radius: 50%;
     filter: blur(70px);
-    background: radial-gradient(circle,
-      rgba(255, 180, 0, 0.4) 0%,
-      rgba(200, 100, 20, 0.25) 50%,
-      transparent 70%
-    );
-    pointer-events: none;
-    z-index: 0;
-    animation: orb-drift-c 12s ease-in-out infinite alternate;
+    background: radial-gradient(circle, rgba(255,180,0,.4) 0%, rgba(200,100,20,.25) 50%, transparent 70%);
+    pointer-events: none; z-index: 0;
+    animation: orb-c 12s ease-in-out infinite alternate;
   }
-
-  @keyframes orb-drift-a {
-    from { transform: translate(0, 0) scale(1); }
-    to   { transform: translate(-60px, 40px) scale(1.12); }
-  }
-  @keyframes orb-drift-b {
-    from { transform: translate(0, 0) scale(1); }
-    to   { transform: translate(50px, 60px) scale(1.08); }
-  }
-  @keyframes orb-drift-c {
-    from { transform: translate(0, 0) scale(1); }
-    to   { transform: translate(40px, -50px) scale(1.15); }
-  }
-
-  /* Diagonal stripe overlay */
   .hero-stripes {
-    position: absolute;
-    inset: 0;
-    background-image: repeating-linear-gradient(
-      45deg,
-      transparent 0px,
-      transparent 26px,
-      rgba(255, 255, 255, 0.025) 26px,
-      rgba(255, 255, 255, 0.025) 28px
-    );
+    position: absolute; inset: 0;
+    background-image: repeating-linear-gradient(45deg, transparent 0px, transparent 26px, rgba(255,255,255,.025) 26px, rgba(255,255,255,.025) 28px);
     background-size: 56px 56px;
-    animation: slide-stripes 6s linear infinite;
-    pointer-events: none;
-    z-index: 0;
+    animation: stripes 6s linear infinite;
+    pointer-events: none; z-index: 0;
   }
-  @keyframes slide-stripes {
+  @keyframes orb-a {
+    from { transform: translate(0,0) scale(1); }
+    to   { transform: translate(-60px,40px) scale(1.12); }
+  }
+  @keyframes orb-b {
+    from { transform: translate(0,0) scale(1); }
+    to   { transform: translate(50px,60px) scale(1.08); }
+  }
+  @keyframes orb-c {
+    from { transform: translate(0,0) scale(1); }
+    to   { transform: translate(40px,-50px) scale(1.15); }
+  }
+  @keyframes stripes {
     from { background-position: 0 0; }
     to   { background-position: 56px 56px; }
   }
-
-  /* Keep content above the orbs */
   .hero .container { position: relative; z-index: 1; }
+
+  /* ── Section colour washes ── */
+  .colour-teal {
+    position: relative;
+    overflow: hidden;
+  }
+  .colour-teal::before {
+    content: '';
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 80% 100% at 0% 50%, rgba(0,180,160,.18) 0%, transparent 70%),
+      radial-gradient(ellipse 60% 80% at 100% 50%, rgba(0,120,220,.12) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .colour-orange {
+    position: relative;
+    overflow: hidden;
+  }
+  .colour-orange::before {
+    content: '';
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 70% 120% at 100% 0%, rgba(255,120,20,.16) 0%, transparent 65%),
+      radial-gradient(ellipse 50% 80% at 0% 100%, rgba(220,50,30,.12) 0%, transparent 65%);
+    pointer-events: none;
+  }
+
+  .colour-purple {
+    position: relative;
+    overflow: hidden;
+  }
+  .colour-purple::before {
+    content: '';
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 80% 120% at 50% 0%, rgba(120,40,200,.16) 0%, transparent 65%),
+      radial-gradient(ellipse 50% 60% at 100% 100%, rgba(255,180,0,.1) 0%, transparent 65%);
+    pointer-events: none;
+  }
+
+  /* Ensure content sits above the washes */
+  .colour-teal .container,
+  .colour-orange .container,
+  .colour-purple .container { position: relative; z-index: 1; }
 
   .hero-inner {
     display: grid;
