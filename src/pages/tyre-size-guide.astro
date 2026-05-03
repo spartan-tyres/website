@@ -1,0 +1,300 @@
+---
+import Layout from "../layouts/Layout.astro";
+const base = import.meta.env.BASE_URL;
+---
+
+<Layout
+  title="Tyre Size Guide | Spartan Mobile Tyres"
+  description="Learn how to read your tyre size. A simple guide to understanding the numbers and letters on your tyre sidewall."
+  path="/tyre-size-guide/"
+>
+  <section class="hero" style="padding: 3.5rem 0 2.5rem;">
+    <div class="container">
+      <span class="eyebrow">Quick guide</span>
+      <h1>How to read your tyre size</h1>
+      <p>Every tyre has a code on its sidewall. Here is exactly what each part means so you can order the right tyre with confidence.</p>
+    </div>
+  </section>
+
+  <section>
+    <div class="container">
+
+      <!-- Visual tyre code display -->
+      <div class="tyre-code-wrap">
+        <div class="tyre-code" aria-label="Example tyre size 205 55 R16 91V">
+          <span class="tc-part" data-label="Width">205</span>
+          <span class="tc-sep">/</span>
+          <span class="tc-part" data-label="Profile">55</span>
+          <span class="tc-sep"> </span>
+          <span class="tc-part" data-label="Construction">R</span>
+          <span class="tc-part" data-label="Rim size">16</span>
+          <span class="tc-sep"> </span>
+          <span class="tc-part" data-label="Load">91</span>
+          <span class="tc-part" data-label="Speed">V</span>
+        </div>
+        <p class="tyre-code-note">Hover or tap each number to see what it means</p>
+      </div>
+
+      <!-- Breakdown cards -->
+      <div class="breakdown-grid">
+        <div class="breakdown-card">
+          <div class="bc-number">205</div>
+          <h3>Section Width</h3>
+          <p>The width of the tyre from sidewall to sidewall in millimetres. A bigger number means a wider tyre.</p>
+        </div>
+        <div class="breakdown-card">
+          <div class="bc-number">55</div>
+          <h3>Aspect Ratio</h3>
+          <p>The height of the tyre sidewall as a percentage of the width. 55 means the height is 55% of 205mm. Lower numbers give a sportier, lower profile look.</p>
+        </div>
+        <div class="breakdown-card">
+          <div class="bc-number">R</div>
+          <h3>Construction</h3>
+          <p>R stands for Radial, which is the construction type used on almost all modern tyres. You will nearly always see R here.</p>
+        </div>
+        <div class="breakdown-card">
+          <div class="bc-number">16</div>
+          <h3>Rim Diameter</h3>
+          <p>The diameter of the wheel rim the tyre fits, measured in inches. This must match your wheel exactly.</p>
+        </div>
+        <div class="breakdown-card">
+          <div class="bc-number">91</div>
+          <h3>Load Index</h3>
+          <p>The maximum weight each tyre can carry. 91 means 615kg per tyre. You should never fit a tyre with a lower load index than your vehicle requires.</p>
+        </div>
+        <div class="breakdown-card">
+          <div class="bc-number">V</div>
+          <h3>Speed Rating</h3>
+          <p>The maximum sustained speed the tyre is rated for. V means up to 149mph. Never fit a tyre with a lower speed rating than your vehicle requires.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="where-section">
+    <div class="container">
+      <div class="section-head">
+        <h2>Where to find your tyre size</h2>
+        <p>You have three easy options.</p>
+      </div>
+      <div class="where-grid">
+        <div class="where-card">
+          <div class="where-num">1</div>
+          <h3>Tyre sidewall</h3>
+          <p>Look at the side of any of your existing tyres. The size is printed in large text, for example <strong>205/55 R16 91V</strong>.</p>
+        </div>
+        <div class="where-card">
+          <div class="where-num">2</div>
+          <h3>Door sticker</h3>
+          <p>Open the driver's door and look at the door frame or sill. Most cars have a sticker showing the recommended tyre size and pressures.</p>
+        </div>
+        <div class="where-card">
+          <div class="where-num">3</div>
+          <h3>Vehicle handbook</h3>
+          <p>Your car's owner manual will list the approved tyre sizes in the technical specifications section.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Speed rating table -->
+  <section>
+    <div class="container">
+      <div class="section-head">
+        <h2>Speed rating reference</h2>
+        <p>Common speed ratings and their maximum speeds.</p>
+      </div>
+      <div class="table-wrap">
+        <table class="speed-table">
+          <thead>
+            <tr><th>Letter</th><th>Max speed</th><th>Common use</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>T</td><td>118 mph</td><td>Family cars, SUVs</td></tr>
+            <tr><td>H</td><td>130 mph</td><td>Sport saloons, coupes</td></tr>
+            <tr><td>V</td><td>149 mph</td><td>Performance cars</td></tr>
+            <tr><td>W</td><td>168 mph</td><td>High performance</td></tr>
+            <tr><td>Y</td><td>186 mph</td><td>Sports and supercars</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta-band">
+    <div class="container cta-inner">
+      <div>
+        <h2>Know your size? Ready to book?</h2>
+        <p>Send us your tyre size and we will give you an instant quote and come to you.</p>
+      </div>
+      <div class="cta-buttons">
+        <a class="btn" href={`${base}contact/`}>Get a quote</a>
+        <a class="btn secondary" href="https://wa.me/447511928899?text=Hi%2C%20I%27d%20like%20a%20quote%20for%20tyres" target="_blank" rel="noopener noreferrer">WhatsApp us</a>
+      </div>
+    </div>
+  </section>
+
+</Layout>
+
+<style>
+  /* Tyre code display */
+  .tyre-code-wrap {
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+  .tyre-code {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 0.1rem;
+    font-size: clamp(2.8rem, 8vw, 5rem);
+    font-weight: 900;
+    letter-spacing: 0.02em;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.5rem 2.5rem;
+  }
+  .tc-part {
+    position: relative;
+    color: var(--accent);
+    cursor: default;
+    padding: 0 0.05em;
+    transition: color 0.15s;
+  }
+  .tc-part::after {
+    content: attr(data-label);
+    position: absolute;
+    bottom: calc(100% + 8px);
+    left: 50%;
+    transform: translateX(-50%) scale(0.85);
+    background: var(--accent);
+    color: #fff;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 0.3rem 0.6rem;
+    border-radius: 4px;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.15s, transform 0.15s;
+  }
+  .tc-part:hover::after,
+  .tc-part:focus::after {
+    opacity: 1;
+    transform: translateX(-50%) scale(1);
+  }
+  .tc-sep { color: var(--muted); }
+  .tyre-code-note {
+    margin-top: 1rem;
+    font-size: 0.85rem;
+    color: var(--muted);
+  }
+
+  /* Breakdown grid */
+  .breakdown-grid {
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  }
+  .breakdown-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.5rem;
+    border-top: 3px solid var(--accent);
+  }
+  .bc-number {
+    font-size: 2rem;
+    font-weight: 900;
+    color: var(--accent);
+    line-height: 1;
+    margin-bottom: 0.75rem;
+    letter-spacing: 0.02em;
+  }
+  .breakdown-card h3 { margin-bottom: 0.4rem; }
+  .breakdown-card p { margin: 0; font-size: 0.93rem; }
+
+  /* Where to find */
+  .where-section { background: var(--bg-alt); }
+  .where-grid {
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  }
+  .where-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  .where-num {
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+    background: var(--accent);
+    color: #fff;
+    font-weight: 800;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 0.25rem;
+  }
+  .where-card h3 { margin: 0; }
+  .where-card p { margin: 0; font-size: 0.93rem; }
+  .where-card strong { color: var(--text); }
+
+  /* Speed table */
+  .table-wrap {
+    overflow-x: auto;
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+    max-width: 560px;
+  }
+  .speed-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.95rem;
+  }
+  .speed-table th, .speed-table td {
+    padding: 0.8rem 1.25rem;
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+  }
+  .speed-table thead th {
+    background: var(--surface);
+    font-weight: 700;
+    color: var(--text);
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+  .speed-table tbody tr:last-child td { border-bottom: none; }
+  .speed-table tbody td:first-child {
+    font-weight: 800;
+    font-size: 1.1rem;
+    color: var(--accent);
+  }
+  .speed-table tbody tr:hover td { background: var(--surface); }
+
+  /* CTA band */
+  .cta-band { background: var(--bg-alt); border-top: 1px solid var(--border); }
+  .cta-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+    flex-wrap: wrap;
+    padding-top: 3rem;
+    padding-bottom: 3rem;
+  }
+  .cta-inner h2 { margin-bottom: 0.25rem; }
+  .cta-inner p  { margin: 0; }
+  .cta-buttons  { display: flex; gap: 0.75rem; flex-wrap: wrap; flex-shrink: 0; }
+</style>
