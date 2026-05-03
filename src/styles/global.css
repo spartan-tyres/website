@@ -15,13 +15,101 @@
 
 * { box-sizing: border-box; }
 
-html, body {
+html {
   margin: 0;
   padding: 0;
   background: var(--bg);
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background: transparent;
   color: var(--text);
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
+  /* Fixed colourful orbs behind everything */
+  isolation: isolate;
+}
+
+/* Global ambient colour layer — sits behind all content */
+body::before,
+body::after {
+  content: '';
+  position: fixed;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: -1;
+  filter: blur(120px);
+  opacity: 0.55;
+}
+
+/* Red/orange orb — top right, drifts slowly */
+body::before {
+  width: 70vw;
+  height: 70vw;
+  max-width: 800px;
+  max-height: 800px;
+  top: -20vh;
+  right: -15vw;
+  background: radial-gradient(circle,
+    rgba(210, 45, 20, 0.8)  0%,
+    rgba(255, 110, 10, 0.5) 40%,
+    transparent             70%
+  );
+  animation: global-orb-a 14s ease-in-out infinite alternate;
+}
+
+/* Violet orb — bottom left */
+body::after {
+  width: 60vw;
+  height: 60vw;
+  max-width: 700px;
+  max-height: 700px;
+  bottom: -15vh;
+  left: -10vw;
+  background: radial-gradient(circle,
+    rgba(110, 30, 210, 0.65) 0%,
+    rgba(40,  10, 130, 0.35) 45%,
+    transparent              70%
+  );
+  animation: global-orb-b 18s ease-in-out infinite alternate;
+}
+
+@keyframes global-orb-a {
+  from { transform: translate(0, 0) scale(1);    }
+  to   { transform: translate(-5vw, 4vh) scale(1.15); }
+}
+@keyframes global-orb-b {
+  from { transform: translate(0, 0) scale(1);    }
+  to   { transform: translate(4vw, -5vh) scale(1.12); }
+}
+
+/* Teal orb — mid screen, injected via Layout */
+.global-orb-teal {
+  position: fixed;
+  top: 40vh;
+  left: 40vw;
+  width: 50vw;
+  height: 50vw;
+  max-width: 600px;
+  max-height: 600px;
+  border-radius: 50%;
+  filter: blur(130px);
+  pointer-events: none;
+  z-index: -1;
+  opacity: 0.3;
+  background: radial-gradient(circle,
+    rgba(0, 190, 160, 0.8) 0%,
+    rgba(0, 100, 200, 0.4) 50%,
+    transparent            70%
+  );
+  animation: global-orb-c 22s ease-in-out infinite alternate;
+}
+
+@keyframes global-orb-c {
+  from { transform: translate(0, 0) scale(1);    }
+  to   { transform: translate(-6vw, -6vh) scale(1.2); }
 }
 
 a { color: inherit; text-decoration: none; }
@@ -71,9 +159,10 @@ p { margin: 0 0 1em; color: var(--muted); }
   position: relative;
   padding: 5rem 0 4rem;
   background:
-    radial-gradient(800px 400px at 85% -10%, rgba(179, 36, 36, 0.28), transparent 60%),
-    radial-gradient(600px 500px at 10% 110%, rgba(138, 90, 59, 0.12), transparent 70%),
-    linear-gradient(180deg, var(--bg), var(--bg-alt));
+    radial-gradient(ellipse 80% 60% at 90% -5%,  rgba(220, 55, 20,  0.55), transparent 60%),
+    radial-gradient(ellipse 60% 50% at 0%  110%,  rgba(110, 30, 200, 0.30), transparent 65%),
+    radial-gradient(ellipse 50% 60% at 50% 120%,  rgba(255, 150, 0,  0.18), transparent 70%),
+    linear-gradient(160deg, #0e0e14 0%, #1a1020 50%, #0e1418 100%);
   border-bottom: 1px solid var(--border);
   overflow: hidden;
 }
@@ -86,8 +175,8 @@ p { margin: 0 0 1em; color: var(--muted); }
     45deg,
     transparent 0px,
     transparent 26px,
-    rgba(179, 36, 36, 0.045) 26px,
-    rgba(179, 36, 36, 0.045) 28px
+    rgba(255, 255, 255, 0.025) 26px,
+    rgba(255, 255, 255, 0.025) 28px
   );
   background-size: 56px 56px;
   animation: slide-stripes 5s linear infinite;
