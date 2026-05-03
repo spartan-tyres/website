@@ -5,7 +5,7 @@ const GOOGLE_REVIEW_URL = "https://g.page/r/REPLACE_WITH_YOUR_PLACE_ID/review";
 ---
 
 <Layout
-  title="Leave a Review – Spartan Tyres"
+  title="Leave a Review | Spartan Tyres"
   description="Rate your experience with Spartan Tyres and leave a Google review."
   path="/review/"
 >
@@ -66,7 +66,7 @@ const GOOGLE_REVIEW_URL = "https://g.page/r/REPLACE_WITH_YOUR_PLACE_ID/review";
 
     if (rating === 5) {
       thanksHeading.textContent = "Thank you so much!";
-      thanksMsg.textContent = "We're thrilled you had a great experience. We'd love it if you could share it on Google — it really helps us out!";
+      thanksMsg.textContent = "We're thrilled you had a great experience. We'd love it if you could share it on Google, it really helps us out!";
 
       const link = document.createElement("a");
       link.href = GOOGLE_REVIEW_URL;

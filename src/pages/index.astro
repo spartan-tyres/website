@@ -4,9 +4,27 @@ import Layout from "../layouts/Layout.astro";
 const base = import.meta.env.BASE_URL;
 
 const services = [
-  { title: "New Tyres", desc: "All major brands stocked: budget, mid-range and premium fitted while you wait." },
-  { title: "Puncture Repairs", desc: "Safe, industry-standard repairs from £50. Most done in under 30 minutes." },
-  { title: "Wheel Balancing", desc: "Eliminate vibration and uneven wear with precision balancing on every fit." },
+  {
+    num: "01",
+    title: "New Tyres",
+    desc: "All major brands stocked: budget, mid range and premium fitted while you wait.",
+    price: "From £80",
+    icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="3"/><line x1="12" y1="2" x2="12" y2="5"/><line x1="12" y1="19" x2="12" y2="22"/><line x1="2" y1="12" x2="5" y2="12"/><line x1="19" y1="12" x2="22" y2="12"/></svg>`,
+  },
+  {
+    num: "02",
+    title: "Puncture Repairs",
+    desc: "Safe, industry standard repairs. Most done in under 30 minutes.",
+    price: "From £50",
+    icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>`,
+  },
+  {
+    num: "03",
+    title: "Wheel Balancing",
+    desc: "Eliminate vibration and uneven wear with precision balancing on every fit.",
+    price: "From £8 per wheel",
+    icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>`,
+  },
 ];
 
 const brands = [
@@ -20,11 +38,13 @@ const brands = [
 
 <Layout title="Spartan Tyres | Quality Tyres, Fast Fitting">
   <section class="hero">
+    <div class="hero-bg-orb" aria-hidden="true"></div>
+    <div class="hero-stripes" aria-hidden="true"></div>
     <div class="container hero-inner">
       <div class="hero-copy">
         <span class="eyebrow">Tyres · Repairs · Balancing</span>
         <h1>Quality tyres.<br />Fast fitting.<br />Honest pricing.</h1>
-        <p>Spartan Tyres is your local specialist for new tyres, puncture repairs and wheel balancing. Walk-in or book ahead. We'll have you back on the road fast.</p>
+        <p>Spartan Tyres is your local specialist for new tyres, puncture repairs and wheel balancing. Walk in or book ahead. We'll have you back on the road fast.</p>
         <div class="btn-row">
           <a class="btn" href={`${base}contact/`}>Book a fitting</a>
           <a class="btn secondary" href={`${base}services/`}>See services</a>
@@ -52,7 +72,7 @@ const brands = [
     </span>
   </a>
 
-  <section class="brands-section">
+  <section class="brands-section colour-teal">
     <div class="container">
       <p class="brands-label">Brands we stock</p>
       <div class="brands-strip">
@@ -73,31 +93,39 @@ const brands = [
     </div>
   </section>
 
-  <section>
+  <section class="colour-orange">
     <div class="container">
       <div class="section-head">
         <h2>What we do</h2>
         <p>Everything your vehicle needs to stay safe and roadworthy.</p>
       </div>
-      <div class="grid">
+      <div class="services-grid">
         {services.map((s) => (
-          <div class="card">
+          <div class="service-card">
+            <div class="service-top">
+              <span class="service-num">{s.num}</span>
+              <span class="service-icon" set:html={s.icon} />
+            </div>
             <h3>{s.title}</h3>
             <p>{s.desc}</p>
+            <span class="service-price">{s.price}</span>
           </div>
         ))}
+      </div>
+      <div class="services-footer">
+        <a href={`${base}services/`} class="btn secondary">See all services &amp; pricing</a>
       </div>
     </div>
   </section>
 
-  <section>
+  <section class="colour-purple">
     <div class="container">
       <div class="section-head">
         <h2>Why Spartan?</h2>
       </div>
       <div class="grid">
-        <div class="card"><h3>No-nonsense pricing</h3><p>Fixed, transparent prices. No surprise add-ons at the till.</p></div>
-        <div class="card"><h3>Same-day fitting</h3><p>Walk-in welcome. Most fits take 20 to 40 minutes.</p></div>
+        <div class="card"><h3>No nonsense pricing</h3><p>Fixed, transparent prices. No surprise add ons at the till.</p></div>
+        <div class="card"><h3>Same day fitting</h3><p>Walk in welcome. Most fits take 20 to 40 minutes.</p></div>
         <div class="card"><h3>Trusted brands</h3><p>Michelin, Continental, Pirelli, Bridgestone and more in stock.</p></div>
       </div>
     </div>
@@ -105,6 +133,113 @@ const brands = [
 </Layout>
 
 <style>
+  /* ── Hero ── */
+  .hero {
+    position: relative;
+    overflow: hidden;
+    background: #0e0e12;
+  }
+  .hero::before,
+  .hero::after {
+    content: '';
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+    pointer-events: none;
+    z-index: 0;
+  }
+  .hero::before {
+    width: 700px; height: 700px;
+    top: -200px; right: -100px;
+    background: radial-gradient(circle, rgba(220,50,30,.75) 0%, rgba(255,120,20,.45) 45%, transparent 70%);
+    animation: orb-a 8s ease-in-out infinite alternate;
+  }
+  .hero::after {
+    width: 500px; height: 500px;
+    top: -100px; left: -80px;
+    background: radial-gradient(circle, rgba(120,40,200,.55) 0%, rgba(60,20,140,.3) 50%, transparent 70%);
+    animation: orb-b 10s ease-in-out infinite alternate;
+  }
+  .hero-bg-orb {
+    position: absolute;
+    bottom: -120px; left: 10%;
+    width: 460px; height: 460px;
+    border-radius: 50%;
+    filter: blur(70px);
+    background: radial-gradient(circle, rgba(255,180,0,.4) 0%, rgba(200,100,20,.25) 50%, transparent 70%);
+    pointer-events: none; z-index: 0;
+    animation: orb-c 12s ease-in-out infinite alternate;
+  }
+  .hero-stripes {
+    position: absolute; inset: 0;
+    background-image: repeating-linear-gradient(45deg, transparent 0px, transparent 26px, rgba(255,255,255,.025) 26px, rgba(255,255,255,.025) 28px);
+    background-size: 56px 56px;
+    animation: stripes 6s linear infinite;
+    pointer-events: none; z-index: 0;
+  }
+  @keyframes orb-a {
+    from { transform: translate(0,0) scale(1); }
+    to   { transform: translate(-60px,40px) scale(1.12); }
+  }
+  @keyframes orb-b {
+    from { transform: translate(0,0) scale(1); }
+    to   { transform: translate(50px,60px) scale(1.08); }
+  }
+  @keyframes orb-c {
+    from { transform: translate(0,0) scale(1); }
+    to   { transform: translate(40px,-50px) scale(1.15); }
+  }
+  @keyframes stripes {
+    from { background-position: 0 0; }
+    to   { background-position: 56px 56px; }
+  }
+  .hero .container { position: relative; z-index: 1; }
+
+  /* ── Section colour washes ── */
+  .colour-teal {
+    position: relative;
+    overflow: hidden;
+  }
+  .colour-teal::before {
+    content: '';
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 80% 100% at 0% 50%, rgba(0,180,160,.18) 0%, transparent 70%),
+      radial-gradient(ellipse 60% 80% at 100% 50%, rgba(0,120,220,.12) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .colour-orange {
+    position: relative;
+    overflow: hidden;
+  }
+  .colour-orange::before {
+    content: '';
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 70% 120% at 100% 0%, rgba(255,120,20,.16) 0%, transparent 65%),
+      radial-gradient(ellipse 50% 80% at 0% 100%, rgba(220,50,30,.12) 0%, transparent 65%);
+    pointer-events: none;
+  }
+
+  .colour-purple {
+    position: relative;
+    overflow: hidden;
+  }
+  .colour-purple::before {
+    content: '';
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 80% 120% at 50% 0%, rgba(120,40,200,.16) 0%, transparent 65%),
+      radial-gradient(ellipse 50% 60% at 100% 100%, rgba(255,180,0,.1) 0%, transparent 65%);
+    pointer-events: none;
+  }
+
+  /* Ensure content sits above the washes */
+  .colour-teal .container,
+  .colour-orange .container,
+  .colour-purple .container { position: relative; z-index: 1; }
+
   .hero-inner {
     display: grid;
     grid-template-columns: minmax(0, 1fr) minmax(0, 0.9fr);
@@ -121,7 +256,7 @@ const brands = [
     height: auto;
     display: block;
     border-radius: 50%;
-    box-shadow: 0 0 60px rgba(255, 107, 26, 0.25);
+    box-shadow: 0 0 80px rgba(220, 80, 20, 0.5), 0 0 160px rgba(120, 40, 200, 0.2);
   }
   @media (max-width: 760px) {
     .hero-inner { grid-template-columns: 1fr; }
@@ -142,7 +277,6 @@ const brands = [
     transition: background 0.15s;
   }
   .emergency-banner:hover { background: #1ebe5d; }
-
   .emergency-pulse {
     width: 10px;
     height: 10px;
@@ -155,10 +289,8 @@ const brands = [
     0%, 100% { opacity: 1; transform: scale(1); }
     50%       { opacity: 0.4; transform: scale(1.5); }
   }
-
   .emergency-text { font-size: 1rem; color: #fff; }
   .emergency-text strong { color: #fff; font-weight: 800; }
-
   .emergency-cta {
     display: inline-flex;
     align-items: center;
@@ -222,4 +354,56 @@ const brands = [
     color: var(--muted);
   }
 
+  /* Services */
+  .services-grid {
+    display: grid;
+    gap: 1.25rem;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  }
+  .service-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--accent);
+    border-radius: var(--radius);
+    padding: 1.75rem 1.5rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+  }
+  .service-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 32px rgba(179, 36, 36, 0.18);
+    border-color: var(--accent);
+  }
+  .service-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 0.5rem;
+  }
+  .service-num {
+    font-size: 0.75rem;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    color: var(--accent);
+    opacity: 0.7;
+  }
+  .service-icon {
+    width: 28px;
+    height: 28px;
+    color: var(--accent);
+    opacity: 0.85;
+  }
+  .service-icon svg { width: 100%; height: 100%; }
+  .service-card h3 { font-size: 1.1rem; margin: 0; }
+  .service-card p { margin: 0; font-size: 0.93rem; flex: 1; }
+  .service-price {
+    display: inline-block;
+    margin-top: 0.75rem;
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--accent);
+  }
+  .services-footer { margin-top: 1.75rem; }
 </style>

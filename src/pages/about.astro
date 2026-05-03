@@ -23,7 +23,7 @@ const promises = [
   },
   {
     title: "On the road fast",
-    body: "Most fits and repairs are done while you wait. Walk-ins are always welcome; book ahead to guarantee your slot.",
+    body: "Most fits and repairs are done while you wait. Walk ins are always welcome; book ahead to guarantee your slot.",
     icon: `<svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>`,
   },
 ];
@@ -34,12 +34,11 @@ const promises = [
   <section class="hero" style="padding: 3.5rem 0 2.5rem;">
     <div class="container">
       <span class="eyebrow">Our story</span>
-      <h1>Local, independent,<br />straight-talking.</h1>
-      <p>Spartan Tyres is a family-run fitting centre built on the idea that getting a tyre sorted shouldn't be a hassle or a rip-off.</p>
+      <h1>Local, independent, straight talking.</h1>
+      <p>Spartan Tyres is a family run fitting centre built on the idea that getting a tyre sorted shouldn't be a hassle or a rip off.</p>
     </div>
   </section>
 
-  <!-- Stats bar -->
   <div class="stats-bar">
     <div class="container stats-inner">
       {stats.map((s) => (
@@ -51,7 +50,6 @@ const promises = [
     </div>
   </div>
 
-  <!-- Owner intro -->
   <section>
     <div class="container intro-grid">
       <div class="intro-photo" aria-hidden="true">
@@ -60,13 +58,12 @@ const promises = [
       <div class="intro-copy">
         <h2>Family run, community focused</h2>
         <p>Spartan Tyres was built from the ground up by someone who got fed up watching customers get overcharged at big chains for work they didn't need. Over a decade later, the mission is the same: give every driver a fair deal and get them back on the road safely.</p>
-        <p>We serve Staines-upon-Thames and the surrounding area including Ashford, Egham, Shepperton and Sunbury. We're not a franchise, not a call centre. When you contact us, you speak to the people who'll actually be fitting your tyres.</p>
+        <p>We serve Staines upon Thames and the surrounding area including Ashford, Egham, Shepperton and Sunbury. We're not a franchise, not a call centre. When you contact us, you speak to the people who'll actually be fitting your tyres.</p>
         <a class="btn" href={`${base}contact/`}>Get in touch</a>
       </div>
     </div>
   </section>
 
-  <!-- Our promise -->
   <section class="promise-section">
     <div class="container">
       <div class="section-head">
@@ -85,12 +82,11 @@ const promises = [
     </div>
   </section>
 
-  <!-- Bottom CTA -->
   <section class="cta-section">
     <div class="container cta-inner">
       <div>
         <h2>Ready to book?</h2>
-        <p>Walk-ins welcome. Most jobs done in under 30 minutes.</p>
+        <p>Walk ins welcome. Most jobs done in under 30 minutes.</p>
       </div>
       <div class="cta-buttons">
         <a class="btn" href={`${base}contact/`}>Book a fitting</a>
@@ -110,7 +106,6 @@ const promises = [
 </Layout>
 
 <style>
-  /* Stats bar */
   .stats-bar {
     background: var(--accent);
     padding: 2rem 0;
@@ -149,7 +144,6 @@ const promises = [
     .stat:last-child, .stat:nth-last-child(2):nth-child(odd) { border-bottom: none; }
   }
 
-  /* Intro split */
   .intro-grid {
     display: grid;
     grid-template-columns: minmax(0, 0.85fr) minmax(0, 1fr);
@@ -169,7 +163,6 @@ const promises = [
     .intro-photo { max-width: 220px; margin: 0 auto; }
   }
 
-  /* Promise cards */
   .promise-section { background: var(--bg-alt); }
   .promise-grid {
     display: grid;
@@ -188,7 +181,6 @@ const promises = [
   }
   .promise-card h3 { margin-bottom: 0.5rem; }
 
-  /* Bottom CTA */
   .cta-section {
     background: var(--bg-alt);
     border-top: 1px solid var(--border);

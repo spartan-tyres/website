@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://spartan-tyres.com/sitemap-index.xml
+Sitemap: https://spartanmobiletyres.com/sitemap-index.xml
