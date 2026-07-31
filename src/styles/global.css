@@ -238,21 +238,91 @@ section + section { border-top: 1px solid var(--border); }
 /* Footer */
 .site-footer {
   border-top: 1px solid var(--border);
-  padding: 2rem 0;
+  padding-top: 3rem;
   color: var(--muted);
   font-size: 0.9rem;
-  text-align: center;
+}
+.footer-inner {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 3rem;
+  align-items: start;
+  padding-bottom: 2.5rem;
+}
+.footer-brand {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  max-width: 22rem;
+}
+.footer-logo-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  text-decoration: none;
+}
+.footer-logo {
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  object-fit: cover;
+}
+.footer-brand-name {
+  font-weight: 700;
+  font-size: 1rem;
+  color: var(--text);
+}
+.footer-tagline {
+  margin: 0;
+  font-size: 0.875rem;
+  line-height: 1.55;
 }
 .footer-tiktok {
-  display: flex; align-items: center; justify-content: center;
-  gap: 0.6rem; flex-wrap: wrap; margin-bottom: 0.75rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: var(--text);
+  font-weight: 600;
+  font-size: 0.85rem;
+  transition: color 0.15s;
+  width: fit-content;
 }
-.footer-tiktok a {
-  display: inline-flex; align-items: center; gap: 0.35rem;
-  color: var(--text); font-weight: 600; transition: color 0.15s;
+.footer-tiktok:hover { color: var(--accent); }
+
+.footer-links {
+  display: flex;
+  gap: 3rem;
 }
-.footer-tiktok a:hover { color: var(--accent); }
-.footer-tiktok span { color: var(--muted); font-size: 0.875rem; }
+.footer-col {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.footer-col h4 {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text);
+  margin: 0 0 0.35rem;
+}
+.footer-col a {
+  color: var(--muted);
+  font-size: 0.875rem;
+  transition: color 0.15s;
+}
+.footer-col a:hover { color: var(--accent); }
+
+.footer-bottom {
+  border-top: 1px solid var(--border);
+  padding: 1.1rem 0;
+  font-size: 0.82rem;
+  color: var(--muted);
+}
+
+@media (max-width: 700px) {
+  .footer-inner { grid-template-columns: 1fr; gap: 2rem; }
+  .footer-links { gap: 2rem; }
+}
 
 /* Scroll reveal */
 @keyframes flame-rise {
