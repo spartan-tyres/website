@@ -1,0 +1,215 @@
+---
+import Layout from "../layouts/Layout.astro";
+
+const base = import.meta.env.BASE_URL;
+
+const areas = [
+  {
+    name: "Staines-upon-Thames",
+    postcodes: ["TW18", "TW19"],
+    note: "Our home base. We cover the whole town.",
+  },
+  {
+    name: "Ashford",
+    postcodes: ["TW15"],
+    note: "Full coverage including Ashford Common and Clockhouse.",
+  },
+  {
+    name: "Egham",
+    postcodes: ["TW20"],
+    note: "Including Egham Hythe, Thorpe and Virginia Water.",
+  },
+  {
+    name: "Shepperton",
+    postcodes: ["TW17"],
+    note: "Including Upper Halliford and Shepperton Green.",
+  },
+  {
+    name: "Sunbury-on-Thames",
+    postcodes: ["TW16"],
+    note: "Including Sunbury Common and Upper Sunbury.",
+  },
+  {
+    name: "Weybridge",
+    postcodes: ["KT13"],
+    note: "Including Oatlands and St George's Hill.",
+  },
+  {
+    name: "Chertsey",
+    postcodes: ["KT16"],
+    note: "Including Addlestone and Ottershaw.",
+  },
+  {
+    name: "Feltham",
+    postcodes: ["TW13", "TW14"],
+    note: "Including Hanworth and Bedfont.",
+  },
+];
+---
+
+<Layout
+  title="Service Area | Spartan Tyres"
+  description="Spartan Tyres covers Staines-upon-Thames, Ashford, Egham, Shepperton, Sunbury, Weybridge, Chertsey and Feltham. Mobile tyre fitting — we come to you."
+>
+  <section class="hero" style="padding: 3.5rem 0 2.5rem;">
+    <div class="container">
+      <span class="eyebrow">Where we work</span>
+      <h1>Service Area</h1>
+      <p>We're mobile — no forecourt, no waiting around. We come to your home, workplace or wherever you're parked across Staines and Surrey.</p>
+    </div>
+  </section>
+
+  <section>
+    <div class="container">
+
+      <div class="area-grid">
+        {areas.map((a) => (
+          <div class="card area-card">
+            <div class="area-header">
+              <h3 class="area-name">{a.name}</h3>
+              <div class="postcode-chips">
+                {a.postcodes.map((pc) => (
+                  <span class="postcode-chip">{pc}</span>
+                ))}
+              </div>
+            </div>
+            <p class="area-note">{a.note}</p>
+          </div>
+        ))}
+      </div>
+
+      <div class="map-section">
+        <h2>Find us on the map</h2>
+        <p style="color: var(--muted); margin-bottom: 1.25rem;">We're based in Staines-upon-Thames and travel across the surrounding area.</p>
+        <div class="map-wrap">
+          <iframe
+            title="Spartan Tyres service area — Staines-upon-Thames, Surrey"
+            src="https://maps.google.com/maps?q=Staines-upon-Thames,Surrey,UK&t=&z=11&ie=UTF8&iwloc=&output=embed"
+            width="100%"
+            height="380"
+            style="border:0;"
+            allowfullscreen
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+          ></iframe>
+        </div>
+      </div>
+
+      <div class="area-note-box card">
+        <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="note-icon" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        <div>
+          <strong>Not on the list?</strong>
+          <p>Our coverage area is growing. If you're nearby and not sure whether we cover your postcode, drop us a message — we'll let you know straight away.</p>
+        </div>
+      </div>
+
+      <div class="area-cta card">
+        <h3>Ready to book?</h3>
+        <p>We come to you — at home, at work, or wherever the car is parked. Most jobs take under 30 minutes.</p>
+        <div class="area-cta-buttons">
+          <a class="btn" href={`${base}contact/`}>Book a fitting</a>
+          <a
+            class="btn secondary"
+            href="https://wa.me/447511928899?text=Hi%2C%20I%27d%20like%20to%20book%20a%20tyre%20fitting"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <svg viewBox="0 0 24 24" width="17" height="17" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/></svg>
+            WhatsApp us
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .area-grid {
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    margin-bottom: 3rem;
+  }
+
+  .area-card {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  .area-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+  }
+  .area-name {
+    font-size: 1.05rem;
+    margin: 0;
+  }
+  .postcode-chips {
+    display: flex;
+    gap: 0.35rem;
+    flex-wrap: wrap;
+    flex-shrink: 0;
+  }
+  .postcode-chip {
+    background: var(--accent);
+    color: #fff;
+    font-size: 0.75rem;
+    font-weight: 700;
+    padding: 0.2rem 0.55rem;
+    border-radius: 4px;
+    letter-spacing: 0.04em;
+  }
+  .area-note {
+    font-size: 0.88rem;
+    color: var(--muted);
+    margin: 0;
+  }
+
+  .map-section { margin-bottom: 2.5rem; }
+  .map-section h2 { margin-bottom: 0; }
+  .map-wrap {
+    border-radius: var(--radius);
+    overflow: hidden;
+    border: 1px solid var(--border);
+  }
+
+  .area-note-box {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.85rem;
+    max-width: 40rem;
+    margin-bottom: 2rem;
+    padding: 1.25rem;
+  }
+  .note-icon {
+    flex-shrink: 0;
+    color: var(--accent);
+    margin-top: 0.1rem;
+  }
+  .area-note-box strong { display: block; margin-bottom: 0.25rem; }
+  .area-note-box p { margin: 0; font-size: 0.9rem; color: var(--muted); }
+
+  .area-cta {
+    max-width: 32rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  .area-cta h3 { margin-bottom: 0; }
+  .area-cta p { margin: 0; }
+  .area-cta-buttons {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+    margin-top: 0.5rem;
+  }
+  .area-cta-buttons .secondary {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+  }
+</style>
