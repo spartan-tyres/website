@@ -21,6 +21,15 @@ html {
   background: var(--bg);
 }
 
+@media (max-width: 600px) {
+  html {
+    background:
+      radial-gradient(ellipse 140% 35% at 50% 0%,   rgba(179, 36, 36, 0.18) 0%, transparent 70%),
+      radial-gradient(ellipse 120% 25% at 50% 100%,  rgba(110, 30, 200, 0.12) 0%, transparent 70%),
+      var(--bg);
+  }
+}
+
 body {
   margin: 0;
   padding: 0;
@@ -83,6 +92,28 @@ body::after {
 @keyframes global-orb-b {
   from { transform: translate(0, 0) scale(1);    }
   to   { transform: translate(4vw, -5vh) scale(1.12); }
+}
+
+/* On mobile the heavy blur makes orbs invisible — tighten and brighten them */
+@media (max-width: 600px) {
+  body::before {
+    width: 130vw;
+    height: 130vw;
+    max-width: none;
+    top: -5vh;
+    right: -25vw;
+    filter: blur(55px);
+    opacity: 0.75;
+  }
+  body::after {
+    width: 110vw;
+    height: 110vw;
+    max-width: none;
+    bottom: 0;
+    left: -20vw;
+    filter: blur(50px);
+    opacity: 0.65;
+  }
 }
 
 /* Teal orb — mid screen, injected via Layout */
@@ -322,6 +353,13 @@ section + section { border-top: 1px solid var(--border); }
 @media (max-width: 700px) {
   .footer-inner { grid-template-columns: 1fr; gap: 2rem; }
   .footer-links { gap: 2rem; }
+}
+
+/* Sections between hero get a very faint accent tint on mobile to break up the black */
+@media (max-width: 600px) {
+  section:nth-child(even) {
+    background: rgba(179, 36, 36, 0.03);
+  }
 }
 
 /* Scroll reveal */
