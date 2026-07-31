@@ -29,10 +29,13 @@ const services = [
 
 const brands = [
   { name: "Michelin",    domain: "michelin.com" },
-  { name: "Bridgestone", domain: "bridgestone.com" },
+  { name: "Pirelli",     domain: "pirelli.com" },
   { name: "Continental", domain: "continental-tires.com" },
   { name: "Goodyear",    domain: "goodyear.com" },
-  { name: "Pirelli",     domain: "pirelli.com" },
+  { name: "Bridgestone", domain: "bridgestone.com" },
+  { name: "Dunlop",      domain: "dunlop.eu" },
+  { name: "Hankook",     domain: "hankooktire.com" },
+  { name: "Falken",      domain: "falkentire.com" },
 ];
 ---
 
@@ -79,15 +82,17 @@ const brands = [
       <div class="brands-strip">
         {brands.map((b) => (
           <div class="brand-tile">
-            <img
-              src={`https://logo.clearbit.com/${b.domain}`}
-              alt={b.name}
-              width="140"
-              height="56"
-              loading="lazy"
-              onerror="this.style.display='none';this.nextElementSibling.style.display='block'"
-            />
-            <span class="brand-fallback">{b.name}</span>
+            <div class="brand-img-wrap">
+              <img
+                src={`https://logo.clearbit.com/${b.domain}`}
+                alt={b.name}
+                width="160"
+                height="64"
+                loading="lazy"
+                onerror="this.closest('.brand-img-wrap').style.display='none'"
+              />
+            </div>
+            <span class="brand-name">{b.name}</span>
           </div>
         ))}
       </div>
@@ -259,7 +264,7 @@ const brands = [
 
   /* Brand logos */
   .brands-section {
-    padding: 2.5rem 0;
+    padding: 3rem 0;
     border-top: 1px solid var(--border);
     border-bottom: 1px solid var(--border);
     background: var(--bg-alt);
@@ -270,38 +275,49 @@ const brands = [
     text-transform: uppercase;
     letter-spacing: 0.14em;
     color: var(--muted);
-    margin: 0 0 1.75rem;
+    margin: 0 0 2rem;
   }
   .brands-strip {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 1.25rem;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+  }
+  @media (max-width: 700px) {
+    .brands-strip { grid-template-columns: repeat(2, 1fr); }
   }
   .brand-tile {
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: 1rem 1.75rem;
+    gap: 0.6rem;
+    padding: 1.4rem 1rem;
     border: 1px solid var(--border);
     border-radius: var(--radius);
     background: var(--surface);
-    min-width: 140px;
+    transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s;
+  }
+  .brand-tile:hover {
+    border-color: var(--accent);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+  }
+  .brand-img-wrap {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 56px;
   }
   .brand-tile img {
     display: block;
     width: auto;
-    height: 48px;
+    max-width: 140px;
+    height: 52px;
     object-fit: contain;
-    filter: grayscale(1) brightness(1.9);
-    transition: filter 0.25s;
   }
-  .brand-tile:hover img { filter: grayscale(0) brightness(1); }
-  .brand-fallback {
-    display: none;
-    font-size: 1rem;
-    font-weight: 700;
+  .brand-name {
+    font-size: 0.78rem;
+    font-weight: 600;
     letter-spacing: 0.06em;
     text-transform: uppercase;
     color: var(--muted);
