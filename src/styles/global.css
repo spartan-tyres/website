@@ -41,7 +41,7 @@ body {
   isolation: isolate;
 }
 
-/* Global ambient colour layer — sits behind all content */
+/* Global ambient colour layer - sits behind all content */
 body::before,
 body::after {
   content: '';
@@ -53,7 +53,7 @@ body::after {
   opacity: 0.55;
 }
 
-/* Red/orange orb — top right, drifts slowly */
+/* Red/orange orb - top right, drifts slowly */
 body::before {
   width: 70vw;
   height: 70vw;
@@ -69,7 +69,7 @@ body::before {
   animation: global-orb-a 14s ease-in-out infinite alternate;
 }
 
-/* Violet orb — bottom left */
+/* Violet orb - bottom left */
 body::after {
   width: 60vw;
   height: 60vw;
@@ -94,7 +94,7 @@ body::after {
   to   { transform: translate(4vw, -5vh) scale(1.12); }
 }
 
-/* On mobile the heavy blur makes orbs invisible — tighten and brighten them */
+/* On mobile the heavy blur makes orbs invisible - tighten and brighten them */
 @media (max-width: 600px) {
   body::before {
     width: 130vw;
@@ -116,7 +116,7 @@ body::after {
   }
 }
 
-/* Teal orb — mid screen, injected via Layout */
+/* Teal orb - mid screen, injected via Layout */
 .global-orb-teal {
   position: fixed;
   top: 40vh;
