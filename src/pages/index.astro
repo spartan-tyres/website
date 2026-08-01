@@ -28,14 +28,14 @@ const services = [
 ];
 
 const brands = [
-  { name: "Michelin",    domain: "michelin.com" },
-  { name: "Pirelli",     domain: "pirelli.com" },
-  { name: "Continental", domain: "continental-tires.com" },
-  { name: "Goodyear",    domain: "goodyear.com" },
-  { name: "Bridgestone", domain: "bridgestone.com" },
-  { name: "Dunlop",      domain: "dunlop.eu" },
-  { name: "Hankook",     domain: "hankooktire.com" },
-  { name: "Falken",      domain: "falkentire.com" },
+  { name: "Michelin",    domain: "michelin.com",         color: "#002677" },
+  { name: "Pirelli",     domain: "pirelli.com",           color: "#CE1316" },
+  { name: "Continental", domain: "continental-tires.com", color: "#FF6400" },
+  { name: "Goodyear",    domain: "goodyear.com",          color: "#0054A4" },
+  { name: "Bridgestone", domain: "bridgestone.com",       color: "#E31937" },
+  { name: "Dunlop",      domain: "dunlop.eu",             color: "#E2001A" },
+  { name: "Hankook",     domain: "hankooktire.com",       color: "#003087" },
+  { name: "Falken",      domain: "falkentire.com",        color: "#E30613" },
 ];
 ---
 
@@ -78,10 +78,13 @@ const brands = [
 
   <section class="brands-section">
     <div class="container">
-      <p class="brands-label">Brands we stock</p>
+      <div class="brands-header">
+        <h2 class="brands-heading">Brands we stock</h2>
+        <p class="brands-sub">Budget, mid-range and premium — all fitted while you wait.</p>
+      </div>
       <div class="brands-strip">
         {brands.map((b) => (
-          <div class="brand-tile">
+          <div class="brand-tile" style={`--brand: ${b.color};`}>
             <div class="brand-img-wrap">
               <img
                 src={`https://logo.clearbit.com/${b.domain}`}
@@ -264,18 +267,35 @@ const brands = [
 
   /* Brand logos */
   .brands-section {
-    padding: 3rem 0;
+    padding: 3.5rem 0;
+    background:
+      radial-gradient(ellipse 70% 90% at 0% 50%,   rgba(179, 36, 36, 0.18) 0%, transparent 60%),
+      radial-gradient(ellipse 60% 80% at 100% 50%,  rgba(0, 84, 164, 0.14)  0%, transparent 60%),
+      radial-gradient(ellipse 50% 50% at 50% 100%,  rgba(255, 100, 0, 0.10) 0%, transparent 60%),
+      linear-gradient(180deg, #18181e 0%, #1d1d24 100%);
     border-top: 1px solid var(--border);
     border-bottom: 1px solid var(--border);
-    background: var(--bg-alt);
+    position: relative;
+    overflow: hidden;
   }
-  .brands-label {
+  .brands-header {
     text-align: center;
-    font-size: 0.75rem;
-    text-transform: uppercase;
-    letter-spacing: 0.14em;
+    margin-bottom: 2.25rem;
+  }
+  .brands-heading {
+    font-size: clamp(1.3rem, 3vw, 1.8rem);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    margin: 0 0 0.35rem;
+    background: linear-gradient(90deg, #e05c00 0%, var(--accent) 40%, #0054a4 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .brands-sub {
+    font-size: 0.9rem;
     color: var(--muted);
-    margin: 0 0 2rem;
+    margin: 0;
   }
   .brands-strip {
     display: grid;
@@ -290,23 +310,34 @@ const brands = [
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 0.6rem;
-    padding: 1.4rem 1rem;
-    border: 1px solid var(--border);
+    gap: 0.65rem;
+    padding: 1.5rem 1rem;
     border-radius: var(--radius);
-    background: var(--surface);
-    transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s;
+    border: 1px solid color-mix(in srgb, var(--brand) 35%, transparent);
+    background: color-mix(in srgb, var(--brand) 7%, var(--surface));
+    transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+    position: relative;
+    overflow: hidden;
+  }
+  .brand-tile::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 80% 60% at 50% 0%, color-mix(in srgb, var(--brand) 20%, transparent), transparent 70%);
+    pointer-events: none;
   }
   .brand-tile:hover {
-    border-color: var(--accent);
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+    transform: translateY(-3px);
+    border-color: color-mix(in srgb, var(--brand) 65%, transparent);
+    box-shadow: 0 8px 28px color-mix(in srgb, var(--brand) 28%, transparent);
   }
   .brand-img-wrap {
     display: flex;
     align-items: center;
     justify-content: center;
     height: 56px;
+    position: relative;
+    z-index: 1;
   }
   .brand-tile img {
     display: block;
@@ -317,10 +348,12 @@ const brands = [
   }
   .brand-name {
     font-size: 0.78rem;
-    font-weight: 600;
+    font-weight: 700;
     letter-spacing: 0.06em;
     text-transform: uppercase;
-    color: var(--muted);
+    color: color-mix(in srgb, var(--brand) 80%, var(--text));
+    position: relative;
+    z-index: 1;
   }
 
   /* Services */
