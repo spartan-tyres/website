@@ -8,8 +8,8 @@ interface Props {
 }
 
 const {
-  title = "Spartan Tyres",
-  description = "Quality tyres, fast fitting, honest pricing. Your local tyre specialist in Staines upon Thames, Surrey.",
+  title = "Spartan Mobile Tyres",
+  description = "Mobile tyre fitting in Staines-upon-Thames and Surrey. New tyres, puncture repairs and wheel balancing — we come to you at home or work.",
   path = Astro.url.pathname,
 } = Astro.props;
 
@@ -32,8 +32,8 @@ const normalized = path.endsWith("/") ? path : `${path}/`;
 const jsonLd = {
   "@context": "https://schema.org",
   "@type": "AutoRepair",
-  "name": "Spartan Tyres",
-  "description": "Independent tyre fitting specialist serving Staines upon Thames, Surrey and surrounding areas. New tyres, puncture repairs, wheel balancing and TPMS.",
+  "name": "Spartan Mobile Tyres",
+  "description": "Mobile tyre fitting specialist serving Staines-upon-Thames, Surrey and surrounding areas. New tyres, puncture repairs, wheel balancing and TPMS. We come to you.",
   "url": siteOrigin,
   "logo": ogImage,
   "image": ogImage,
@@ -76,9 +76,9 @@ const jsonLd = {
     <meta property="og:description" content={description} />
     <meta property="og:image" content={ogImage} />
     <meta property="og:locale" content="en_GB" />
-    <meta property="og:site_name" content="Spartan Tyres" />
+    <meta property="og:site_name" content="Spartan Mobile Tyres" />
     <!-- Twitter / X card -->
-    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogImage} />
@@ -89,7 +89,7 @@ const jsonLd = {
   <body>
     <header class="site-header">
       <div class="inner">
-        <a href={base} class="brand" aria-label="Spartan Tyres home"><img src={`${base}img/logo.jpg`} alt="Spartan Tyres" class="brand-logo" width="44" height="44" /></a>
+        <a href={base} class="brand" aria-label="Spartan Mobile Tyres home"><img src={`${base}img/logo.jpg`} alt="Spartan Mobile Tyres" class="brand-logo" width="44" height="44" /></a>
         <nav class="nav">
           {nav.map((item) => (
             <a href={item.href} class={normalized === item.href ? "active" : ""}>{item.label}</a>
@@ -105,9 +105,9 @@ const jsonLd = {
     <footer class="site-footer">
       <div class="container footer-inner">
         <div class="footer-brand">
-          <a href={base} class="footer-logo-link" aria-label="Spartan Tyres home">
-            <img src={`${base}img/logo.jpg`} alt="Spartan Tyres" width="40" height="40" class="footer-logo" />
-            <span class="footer-brand-name">Spartan Tyres</span>
+          <a href={base} class="footer-logo-link" aria-label="Spartan Mobile Tyres home">
+            <img src={`${base}img/logo.jpg`} alt="Spartan Mobile Tyres" width="40" height="40" class="footer-logo" />
+            <span class="footer-brand-name">Spartan Mobile Tyres</span>
           </a>
           <p class="footer-tagline">Mobile tyre fitting across Staines-upon-Thames and Surrey. We come to you.</p>
           <a href="https://www.tiktok.com/@beanz377" target="_blank" rel="noopener noreferrer" class="footer-tiktok">
